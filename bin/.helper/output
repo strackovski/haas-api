@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Console output helper
+################################################################################
+## functions
+
+printc(){
+    if [ $# -eq 0 ] || [ -z "$1" ]; then
+        echo "Missing arguments for printc"
+        exit 1;
+    fi
+
+    if [ -z "$2" ]; then
+        COLOR='DEFAULT'
+    else
+        COLOR=${2}
+    fi
+
+    case "${COLOR}" in
+        red)    COLOR_CODE=9;;
+        blue)   COLOR_CODE=69;;
+        black)  COLOR_CODE=30;;
+        white)  COLOR_CODE=97;;
+        green)  COLOR_CODE=40;;
+        *)      COLOR_CODE=39;;
+    esac
+
+    printf "%s${1}%s" "$(tput setaf ${COLOR_CODE})" "$(tput sgr0)"
+}

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+echo "alias ll='ls -ahl'" >> ~/.bashrc
+eval `ssh-agent -s`
+ssh-add
+ssh-add -l
+
+bundle install
+
+exec "$@"

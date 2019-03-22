@@ -1,0 +1,253 @@
+parameters:
+    locale: en
+    locale_default: en_GB
+    currency_service_root_uri: 'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=T6TKID9HYXNPFKXD75KMTEDY6U71N11UBD'
+    # 'https://api.cryptonator.com/api'
+    currency_service_auth: []
+    currency_service_options: ~
+    app_token: '%env(resolve:HAAS_APP_TOKEN)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Makes classes in src/ available to be used as services
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    #
+    # SERVICE CONFIGURATORS
+    #
+    App\Service\Configurator\RepositoryConfigurator:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    App\Service\Configurator\ManagerConfigurator:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@App\Service\Mutator\EntityMutator'
+            - "@router"
+            - "@event_dispatcher"
+
+    #
+    # SECURITY
+    #
+    security.event.authentication_success_listener:
+        class: App\EventListener\AuthenticationSuccessListener
+        arguments: [ "@lexik_jwt_authentication.encoder.default" ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+
+    security.event.jwt_created_listener:
+        class: App\EventListener\JWTCreatedListener
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    security.event.jwt_authenticated_listener:
+        class: App\EventListener\JWTAuthenticatedListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_authenticated, method: onJWTAuthenticated }
+
+    security.refresh_token_user_provider:
+        class: App\Security\RefreshTokenUserProvider
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    security.jwt_user_provider:
+        class: App\Security\JWTUserProvider
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    security.refresh_token_authenticator:
+        class: App\Security\RefreshTokenAuthenticator
+        public: false
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@lexik_jwt_authentication.encoder.default"
+            - "@lexik_jwt_authentication.handler.authentication_success"
+            - "@lexik_jwt_authentication.handler.authentication_failure"
+
+    account.registration_completed_listener:
+        class:  App\EventListener\RegistrationCompletedListener
+        arguments: ['@App\Service\Manager\UserManager']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    App\Security\LoginSuccessHandler:
+        class:
+        arguments:  ['@router', '@security.authorization_checker']
+
+    App\Service\Dependency\UserValueResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
+    #
+    # ENTITY REPOSITORY AND MANAGER SERVICES
+    #
+    App\Repository\AbstractRepository:
+        abstract: true
+        configurator: 'App\Service\Configurator\RepositoryConfigurator:configure'
+
+    App\Repository\:
+        resource: '../src/Repository'
+        parent: App\Repository\AbstractRepository
+        autowire: true
+        autoconfigure: false
+        public: true
+
+    App\Service\Manager\AbstractManager:
+        abstract: true
+        configurator: 'App\Service\Configurator\ManagerConfigurator:configure'
+
+    App\Service\Manager\:
+        resource: '../src/Service/Manager'
+        parent: App\Service\Manager\AbstractManager
+        autowire: true
+        autoconfigure: false
+        public: true
+
+    #
+    # SERIALIZER
+    #
+    uuid_normalizer:
+        class: GBProd\UuidNormalizer\UuidNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    uuid_denormalizer:
+        class: GBProd\UuidNormalizer\UuidDenormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    fos_user.util.user_manipulator:
+        class: FOS\UserBundle\Util\UserManipulator
+        public: true
+
+    #
+    # DOCTRINE EXTENSIONS
+    #
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    #
+    # EVENTS
+    #
+    App\EventListener\MagicLinkRequestListener:
+      arguments:
+        - '@App\Service\Mailer\SimpleEmailService'
+      tags:
+        - { name: kernel.event_listener, event: mlink.requested, method: onMagicLinkRequest }
+
+    #
+    # FOSUserBundle FORM OVERRIDES
+    #
+    app.form.registration:
+        class: App\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.form.profile:
+        class: App\Form\ProfileType
+        tags:
+            - { name: form.type, alias: app_user_profile }
+
+    app.custom_fos_user_mailer:
+        class: App\Service\Mailer\FOSMailer
+        arguments:
+            - '@App\Service\Mailer\Send'
+            - '@router'
+        public: true
+
+    #
+    # FORM
+    #
+    App\Service\Form\Processor\EntityFormProcessor:
+        public: true
+
+    form.type_extension.form.http_foundation:
+        class: Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension
+        arguments:
+            - '@form.type_extension.form.request_handler'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+
+    #
+    # Mailing services
+    #
+    App\Service\Mailer\Send:
+        arguments:
+            - '%env(resolve:MAILER_USER_ADDRESS)%'
+            - '%env(resolve:MAILER_USER_NAME)%'
+            - '%env(resolve:MAILGUN_DOMAIN)%'
+            - '@queue'
+            - '@Mailgun\Mailgun'
+            - '@templating'
+        public: true
+
+    App\Service\Mailer\FOSMailer:
+        arguments:
+            - '@App\Service\Mailer\Send'
+            - '@router'
+        public: true
+
+    #
+    # Queue \ Messaging \ Redis \ Push
+    #
+    push.manager:
+        class: App\Service\Notification\PushManager
+        arguments:
+            - '@pubsub.client'
+
+    pubsub.client:
+        class: App\Service\PubSub\RedisClient
+
+    #
+    # OTHER
+    #
+    GuzzleHttp\Client:
+        public: true
+
+    fos_user.util.token_generator.default:
+        class: FOS\UserBundle\Util\TokenGenerator
+        public: true
+
+    queue:
+        class: SidekiqJob\Client
+        public: true
+        arguments:
+            - '@redis.client'
+
+    redis.client:
+        class: Predis\Client
+        arguments:
+            - tcp://%env(resolve:REDIS_URL)%:6379
+
+    App\Service\Upload\S3:
+        public: true
+        arguments:
+            - '%env(resolve:AWS_KEY)%'
+            - '%env(resolve:AWS_SECRET)%'
+            - '%env(resolve:AWS_S3_BUCKET)%'
+            - '%env(resolve:AWS_REGION)%'
+
+    App\Service\Mailer\SimpleEmailService:
+        public: true
+        arguments:
+            - '%env(resolve:AWS_KEY)%'
+            - '%env(resolve:AWS_SECRET)%'
+            - "@router"
+            - "@templating"
+            - "@logger"

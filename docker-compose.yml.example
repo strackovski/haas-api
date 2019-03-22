@@ -1,0 +1,101 @@
+version: '3'
+services:
+  postgresql:
+    container_name: haas-postgres    
+    image: 'postgres:9.6-alpine'
+    environment:
+      - POSTGRES_USER=haas-dbuser
+      - POSTGRES_PASSWORD=haas-dbpass
+      - POSTGRES_DB=haas-db
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgres_haas:/var/lib/pgsql/9.6/data:rw,cached'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.2
+  nginx:
+    container_name: haas-nginx
+    depends_on:
+      - php
+    image: 'nginx:1.13-alpine'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './:/code:rw,cached'
+      - '/code/docker/'
+      - './docker/resources/nginx/conf.d/vhost.conf:/etc/nginx/conf.d/vhost.conf'
+      - './docker/resources/nginx/ssl:/etc/nginx/ssl'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.3
+  php:
+    container_name: haas-php    
+    build:
+      context: ./docker/resources/php/docker-config/
+      dockerfile: Dockerfile
+      args:
+        ##arg_user_id: "${`id -u`}" 
+        arg_user_id: "XYZuseridXYZ"
+    working_dir: /code
+    volumes:
+      - './:/code'
+      - '/code/docker/'
+      - './docker/resources/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
+      - './docker/resources/php/etc/.bashrc:/etc/bash.bashrc'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.4
+  sidekiq:
+    container_name: haas-sidekiq
+    build:
+      context: ./docker/resources/sidekiq/docker-config/
+      dockerfile: Dockerfile
+      args:
+        ##arg_user_id: "${`id -u`}" 
+        arg_user_id: "1000"
+    working_dir: /code
+    environment:
+      - REDIS_URL=redis://10.10.38.6:6379 
+    depends_on:
+      - redis
+    volumes:
+      - './:/code'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.5
+  sidekiq-monitor:
+    container_name: haas-sidekiq-monitor
+    build:
+      context: ./docker/resources/sidekiq/docker-monitor/
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_URL=redis://10.10.38.6:6379
+    depends_on:
+      - redis
+    ports:
+      - '9292:9292'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.7
+  redis:
+    container_name: haas-redis
+    image: 'redis:3.2-alpine'
+    command: redis-server --appendonly yes    
+    volumes:
+      - 'redis_haas:/data:rw,cached'
+    networks:
+      haas:
+        ipv4_address: 10.10.38.6
+networks:
+  haas:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.38.0/24
+volumes:
+  postgres_haas:
+    driver: local
+  redis_haas:
+    driver: local

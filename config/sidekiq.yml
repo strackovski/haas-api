@@ -1,0 +1,13 @@
+---
+:verbose: true
+:pidfile: ./var/pids/sidekiq.pid
+:logfile: ./var/log/sidekiq.log
+:queues:
+  - default
+
+# cron tasks
+:schedule:
+#  ContractResolveCron:
+#    cron: '0 * * * * *'
+#    description: No description
+

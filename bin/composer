@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source ${PWD}/bin/.helper/output
+
+printc "➜  Executing composer self-update\\n" "green"
+docker exec -u www-data haas-php composer self-update
+if [ $# -eq 0 ]
+  then
+    printc "➜  Executing composer install\\n" "green"
+    docker exec -u www-data haas-php composer install
+  else
+    printc "➜  " "green"
+    echo "Executing composer $@"
+    docker exec -u www-data haas-php composer "$@"
+fi

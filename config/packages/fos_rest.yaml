@@ -1,0 +1,14 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+fos_rest:
+    body_listener:
+        array_normalizer: fos_rest.normalizer.camel_keys
+    param_fetcher_listener:  true
+    allowed_methods_listener:  true
+    routing_loader: true
+    view:
+        view_response_listener:  true
+    format_listener:
+        enabled:              false
+        service:              null
+        rules:
+            - { path: ^/, prefer_extension: false, fallback_format: json, priorities: [ json ] }

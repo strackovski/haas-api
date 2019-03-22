@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -e
+set -u
+
+## Code quality assessment tool
+################################################################################
+
+source ${PWD}/bin/.helper/output
+
+################################################################################
+## Functions
+
+function _usage()
+{
+    echo "Usage: ./bin/qa [command]
+
+Available commands:
+  help      Show this text.
+  all       Run all below commands
+  lint      PHP syntax check (lint)
+  cs        PHP coding standards (phpcs)
+  md        PHP mess detector (phpmd)
+  cp        PHP copy/paste detector (phpcpd)
+  csf       PHP coding standards fixer (phpcbf)
+"
+    exit
+}
+
+################################################################################
+## Main
+
+# Move into root directory
+cd `dirname ${0}`/..
+
+case "${1:-}" in
+    all)
+        for c in lint cs md cp
+        do
+            ./bin/qa ${c}
+        done
+        ;;
+    lint)
+        printc "\\n➜  Running parallel lint...\\n\\n" "blue"
+        cmd="./vendor/bin/parallel-lint --exclude vendor src tests"
+        ;;
+    cs)
+        printc "\\n➜  Running code sniffer...\\n\\n" "blue"
+        cmd="./vendor/bin/phpcs --standard=PSR2 --extensions=php --ignore=src/Migrations/* src"
+        ;;
+    md)
+        printc "\\n➜  Running mess detection...\\n\\n" "blue"
+        cmd="./vendor/bin/phpmd src text controversial,bin/.rulesets/phpmd/design.xml,bin/.rulesets/phpmd/codesize.xml,bin/.rulesets/phpmd/naming.xml --exclude src/Migrations --strict";
+        ;;
+    cp)
+        printc "\\n➜  Running copy paste detection...\\n\\n" "blue"
+        cmd="./vendor/bin/phpcpd --min-lines 3 --min-tokens 50 --progress src --no-interaction";
+        ;;
+    csf)
+        printc "\\n➜  Running coding standards fixer...\\n\\n" "blue"
+        cmd="./vendor/bin/phpcbf --standard=PSR2 --extensions=php src";
+        ;;
+    *)
+        _usage
+        ;;
+esac
+
+if [ -n "${cmd:-}" ]
+then
+    # Execute command
+    ./bin/php ${cmd}
+fi

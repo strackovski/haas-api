@@ -1,0 +1,1499 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>HAAS API Reference</title>
+
+    <style>
+        .highlight table td { padding: 5px; }
+        .highlight table pre { margin: 0; }
+        .highlight .gh {
+            color: #999999;
+        }
+        .highlight .sr {
+            color: #f6aa11;
+        }
+        .highlight .go {
+            color: #888888;
+        }
+        .highlight .gp {
+            color: #555555;
+        }
+        .highlight .gs {
+        }
+        .highlight .gu {
+            color: #aaaaaa;
+        }
+        .highlight .nb {
+            color: #f6aa11;
+        }
+        .highlight .cm {
+            color: #75715e;
+        }
+        .highlight .cp {
+            color: #75715e;
+        }
+        .highlight .c1 {
+            color: #75715e;
+        }
+        .highlight .cs {
+            color: #75715e;
+        }
+        .highlight .c, .highlight .cd {
+            color: #75715e;
+        }
+        .highlight .err {
+            color: #960050;
+        }
+        .highlight .gr {
+            color: #960050;
+        }
+        .highlight .gt {
+            color: #960050;
+        }
+        .highlight .gd {
+            color: #49483e;
+        }
+        .highlight .gi {
+            color: #49483e;
+        }
+        .highlight .ge {
+            color: #49483e;
+        }
+        .highlight .kc {
+            color: #66d9ef;
+        }
+        .highlight .kd {
+            color: #66d9ef;
+        }
+        .highlight .kr {
+            color: #66d9ef;
+        }
+        .highlight .no {
+            color: #66d9ef;
+        }
+        .highlight .kt {
+            color: #66d9ef;
+        }
+        .highlight .mf {
+            color: #ae81ff;
+        }
+        .highlight .mh {
+            color: #ae81ff;
+        }
+        .highlight .il {
+            color: #ae81ff;
+        }
+        .highlight .mi {
+            color: #ae81ff;
+        }
+        .highlight .mo {
+            color: #ae81ff;
+        }
+        .highlight .m, .highlight .mb, .highlight .mx {
+            color: #ae81ff;
+        }
+        .highlight .sc {
+            color: #ae81ff;
+        }
+        .highlight .se {
+            color: #ae81ff;
+        }
+        .highlight .ss {
+            color: #ae81ff;
+        }
+        .highlight .sd {
+            color: #e6db74;
+        }
+        .highlight .s2 {
+            color: #e6db74;
+        }
+        .highlight .sb {
+            color: #e6db74;
+        }
+        .highlight .sh {
+            color: #e6db74;
+        }
+        .highlight .si {
+            color: #e6db74;
+        }
+        .highlight .sx {
+            color: #e6db74;
+        }
+        .highlight .s1 {
+            color: #e6db74;
+        }
+        .highlight .s {
+            color: #e6db74;
+        }
+        .highlight .na {
+            color: #a6e22e;
+        }
+        .highlight .nc {
+            color: #a6e22e;
+        }
+        .highlight .nd {
+            color: #a6e22e;
+        }
+        .highlight .ne {
+            color: #a6e22e;
+        }
+        .highlight .nf {
+            color: #a6e22e;
+        }
+        .highlight .vc {
+            color: #ffffff;
+        }
+        .highlight .nn {
+            color: #ffffff;
+        }
+        .highlight .nl {
+            color: #ffffff;
+        }
+        .highlight .ni {
+            color: #ffffff;
+        }
+        .highlight .bp {
+            color: #ffffff;
+        }
+        .highlight .vg {
+            color: #ffffff;
+        }
+        .highlight .vi {
+            color: #ffffff;
+        }
+        .highlight .nv {
+            color: #ffffff;
+        }
+        .highlight .w {
+            color: #ffffff;
+        }
+        .highlight {
+            color: #ffffff;
+        }
+        .highlight .n, .highlight .py, .highlight .nx {
+            color: #ffffff;
+        }
+        .highlight .ow {
+            color: #f92672;
+        }
+        .highlight .nt {
+            color: #f92672;
+        }
+        .highlight .k, .highlight .kv {
+            color: #f92672;
+        }
+        .highlight .kn {
+            color: #f92672;
+        }
+        .highlight .kp {
+            color: #f92672;
+        }
+        .highlight .o {
+            color: #f92672;
+        }
+    </style>
+    <link href="/docs/assets/screen.css" rel="stylesheet" media="screen" />
+    <script src="/docs/assets/all.js"></script>
+</head>
+
+<body class="index" data-languages="[&quot;shell&quot;,&quot;http&quot;,&quot;php&quot;]">
+<a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="/docs/assets/navbar.png" alt="Navbar" />
+      </span>
+</a>
+<div class="toc-wrapper">
+    <img src="/docs/assets/logo.png" class="logo" alt="Logo" />
+    <div class="lang-selector">
+        <a href="#" data-language-name="shell">shell</a>
+        <a href="#" data-language-name="http">http</a>
+        <a href="#" data-language-name="php">php</a>
+    </div>
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+    <ul class="search-results"></ul>
+    <ul id="toc" class="toc-list-h1">
+        <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+        </li>
+        <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+        </li>
+        <li>
+            <a href="#login" class="toc-h1 toc-link" data-title="Login">Login</a>
+        </li>
+        <li>
+            <a href="#contact" class="toc-h1 toc-link" data-title="Contact">Contact</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-addressbook-entries" class="toc-h2 toc-link" data-title="Get All AddressBook Entries">Get All AddressBook Entries</a>
+                </li>
+                <li>
+                    <a href="#get-a-specific-addressbook-entry" class="toc-h2 toc-link" data-title="Get a Specific AddressBook Entry">Get a Specific AddressBook Entry</a>
+                </li>
+                <li>
+                    <a href="#add-an-addressbook-entry" class="toc-h2 toc-link" data-title="Add an AddressBook Entry">Add an AddressBook Entry</a>
+                </li>
+                <li>
+                    <a href="#delete-a-specific-entry" class="toc-h2 toc-link" data-title="Delete a Specific Entry">Delete a Specific Entry</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#fundrequest" class="toc-h1 toc-link" data-title="FundRequest">FundRequest</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-fundrequests" class="toc-h2 toc-link" data-title="Get All FundRequests">Get All FundRequests</a>
+                </li>
+                <li>
+                    <a href="#get-a-specific-fundrequest" class="toc-h2 toc-link" data-title="Get a Specific FundRequest">Get a Specific FundRequest</a>
+                </li>
+                <li>
+                    <a href="#create-a-fundrequest" class="toc-h2 toc-link" data-title="Create a FundRequest">Create a FundRequest</a>
+                </li>
+                <li>
+                    <a href="#update-a-fundrequest" class="toc-h2 toc-link" data-title="Update a FundRequest">Update a FundRequest</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#payment" class="toc-h1 toc-link" data-title="Payment">Payment</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-payments" class="toc-h2 toc-link" data-title="Get All Payments">Get All Payments</a>
+                </li>
+                <li>
+                    <a href="#get-a-specific-payment" class="toc-h2 toc-link" data-title="Get a Specific Payment">Get a Specific Payment</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#transaction" class="toc-h1 toc-link" data-title="Transaction">Transaction</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-transactions" class="toc-h2 toc-link" data-title="Get All Transactions">Get All Transactions</a>
+                </li>
+                <li>
+                    <a href="#get-a-specific-transaction" class="toc-h2 toc-link" data-title="Get a Specific Transaction">Get a Specific Transaction</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#user" class="toc-h1 toc-link" data-title="User">User</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#register-a-user-account" class="toc-h2 toc-link" data-title="Register a User Account">Register a User Account</a>
+                </li>
+                <li>
+                    <a href="#request-password-reset-link" class="toc-h2 toc-link" data-title="Request Password Reset Link">Request Password Reset Link</a>
+                </li>
+                <li>
+                    <a href="#reset-password" class="toc-h2 toc-link" data-title="Reset Password">Reset Password</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#settings" class="toc-h1 toc-link" data-title="Settings">Settings</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-settings-fully-loaded" class="toc-h2 toc-link" data-title="Get All Settings Fully-Loaded">Get All Settings Fully-Loaded</a>
+                </li>
+                <li>
+                    <a href="#update-settings" class="toc-h2 toc-link" data-title="Update Settings">Update Settings</a>
+                </li>
+                <li>
+                    <a href="#get-account-settings" class="toc-h2 toc-link" data-title="Get Account Settings">Get Account Settings</a>
+                </li>
+                <li>
+                    <a href="#update-account-settings" class="toc-h2 toc-link" data-title="Update Account Settings">Update Account Settings</a>
+                </li>
+                <li>
+                    <a href="#get-privacy-settings" class="toc-h2 toc-link" data-title="Get Privacy Settings">Get Privacy Settings</a>
+                </li>
+                <li>
+                    <a href="#update-privacy-settings" class="toc-h2 toc-link" data-title="Update Privacy Settings">Update Privacy Settings</a>
+                </li>
+                <li>
+                    <a href="#get-notification-settings" class="toc-h2 toc-link" data-title="Get Notification Settings">Get Notification Settings</a>
+                </li>
+                <li>
+                    <a href="#update-notification-settings" class="toc-h2 toc-link" data-title="Update Notification Settings">Update Notification Settings</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#userdevice" class="toc-h1 toc-link" data-title="UserDevice">UserDevice</a>
+            <ul class="toc-list-h2">
+                <li>
+                    <a href="#get-all-userdevices" class="toc-h2 toc-link" data-title="Get All UserDevices">Get All UserDevices</a>
+                </li>
+                <li>
+                    <a href="#ping-userdevice" class="toc-h2 toc-link" data-title="Ping UserDevice">Ping UserDevice</a>
+                </li>
+                <li>
+                    <a href="#remove-a-userdevice" class="toc-h2 toc-link" data-title="Remove a UserDevice">Remove a UserDevice</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#form-validation-errors" class="toc-h1 toc-link" data-title="Form Validation Errors">Form Validation Errors</a>
+        </li>
+        <li>
+            <a href="#errors-amp-response-codes" class="toc-h1 toc-link" data-title="Errors &amp; Response Codes">Errors &amp; Response Codes</a>
+        </li>
+        <li>
+            <a href="#identity-amp-identifiers" class="toc-h1 toc-link" data-title="Identity &amp; Identifiers">Identity &amp; Identifiers</a>
+        </li>
+    </ul>
+    <ul class="toc-footer">
+        <li><a href='#'>Sign Up for HAAS</a></li>
+    </ul>
+</div>
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+        <p>Welcome to HAAS API reference docs. This stateless HTTP API supports JSON data format, token based authentication and user management.  </p>
+        <h1 id='authentication'>Authentication</h1>
+        <blockquote>
+            <p>To authorize, use this code:  </p>
+        </blockquote>
+        <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/&lt;ENDPOINT&gt;"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>On error the above command returns a JSON error response:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid credentials"</span><span class="p">,</span><span class="w"> </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"401"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">  
+</span></code></pre>
+        <blockquote>
+            <p>Make sure to replace <code>YOUR-TOKEN</code> with your token.  </p>
+        </blockquote>
+
+        <p>HAAS API uses JWT tokens to authorize all API requests. A token identifies a registered HAAS user. Registered HAAS users can use the <code>login</code> endpoint to retrieve tokens.</p>
+
+        <p>The access token should be included in all requests in a header that looks like the following (notice the <code>Bearer</code> prefix):  </p>
+
+        <p><code>Authorization: Bearer YOUR-TOKEN</code>  </p>
+
+        <aside class="notice">
+            You must replace <code>YOUR-TOKEN</code> with your access token.
+        </aside>
+
+        <h1 id='login'>Login</h1>
+        <blockquote>
+            <p>To login, use this code:  </p>
+        </blockquote>
+        <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/login"</span> -X POST
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -Z <span class="o">{</span>
+       <span class="s2">"username"</span>: <span class="s2">"YOUR-USERNAME"</span>, <span class="s2">"password"</span>: <span class="s2">"YOUR-PASSWORD"</span>
+    <span class="o">}</span>
+</code></pre>
+        <blockquote>
+            <p>On success the above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiO..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbG...."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"valid_until"</span><span class="p">:</span><span class="w"> </span><span class="mi">1544587944</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">86400</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+        <blockquote>
+            <p>Make sure to replace <code>YOUR-USERNAME</code> and <code>YOUR-PASSWORD</code> with your credentials.  </p>
+        </blockquote>
+
+        <p>This endpoint allows any registered user to retrieve tokens by exchanging their account credentials. This endpoint will return on success:</p>
+
+        <ul>
+            <li>Access Token (<code>token</code>) allowing access to protected endpoints for for 24h.</li>
+            <li>Refresh Token (<code>refreah_token</code>), a longer lived token used to retrieve new access tokens after the last one expired. A refresh token is valid for 7 days and can&#39;t be used for authentication.</li>
+            <li>Time until access token is valid (<code>valid_until</code>).</li>
+            <li>Access token time to live (<code>ttl</code>).</li>
+        </ul>
+
+        <aside class="info">
+            Users can provide either their username or their email on all authentication endpoints accross the API.
+        </aside>
+        <h1 id='contact'>Contact</h1>
+        <blockquote>
+            <p>Every AddressBookEntry is guaranteed to have at least the following properties:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d9ffdfd8-650c-4078-8cec-2bb7beec1d67"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T16:14:17+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <blockquote>
+            <p>When AddressBookEntry is a User:</p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e0d0d639-8b21-4a62-8100-5866c6db7017"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T20:34:25+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"532"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+        <p>The Contact API provides an address book feature by introducing the <code>AddressBook</code> type, which is a collection of <code>AddressBookEntry</code> objects. Every User has one AddressBook. Each <code>AddressBookEntry</code> ia an item that a User added to their <code>AddressBook</code>. An AddressBook can hold objects of different types as long as the objects implement WalletAwareInterface.</p>
+
+        <p>This API has two contact types: <code>User</code> and <code>Contect</code>. Contact is uniquely identified by its wallet address, and unlike User, does not have to exist before it is added to the collection. When adding a Contact, users enter the wallet address as the identity for their new entry.</p>
+
+        <p>The AddressBookEntry type sits between the actual collection item and the collection itself and encapsulates common properties while hiding differences in type from AddressBook. </p>
+
+        <aside class="notice">
+            Clients interact with all AddressBookEntry objects transparently, regardless of their underlying object type.
+        </aside>
+        <h2 id='get-all-addressbook-entries'>Get All AddressBook Entries</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/contacts"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns address book entries:</p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d9ffdfd8-650c-4078-8cec-2bb7beec1d67"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T16:14:17+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc3a55da-91eb-4058-a0da-357cffaee149"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T16:15:37+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"321"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e0d0d639-8b21-4a62-8100-5866c6db7017"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T20:34:25+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"532"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac2"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint retrieves all entries in an AddressBook.  </p>
+        <h3 id='http-request'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/contacts</code>  </p>
+        <h3 id='url-parameters'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>filter</td>
+                <td><code>contact</code> or <code>user</code></td>
+                <td>Filter results by entry type.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='get-a-specific-addressbook-entry'>Get a Specific AddressBook Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/contacts/2"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e0d0d639-8b21-4a62-8100-5866c6db7017"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T20:34:25+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"532"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint retrieves a specific entry.  </p>
+        <h3 id='http-request-2'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/contacts/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-2'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the entity to fetch.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='add-an-addressbook-entry'>Add an AddressBook Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/contacts/&lt;ID&gt;"</span>
+ -X POST
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e0d0d639-8b21-4a62-8100-5866c6db7017"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-05T20:34:25+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wallet_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"532"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint adds an entry to user&#39;s AddressBook.  </p>
+        <h3 id='http-request-3'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/contacts</code>  </p>
+        <h3 id='url-parameters-3'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of User to add or wallet address</td>
+            </tr>
+            </tbody></table>
+        <h2 id='delete-a-specific-entry'>Delete a Specific Entry</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/contacts/2"</span>
+ -X DELETE 
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[]</span><span class="w">  
+</span></code></pre>
+        <p>This endpoint deletes a specific entry from AddressBook.  </p>
+        <h3 id='http-request-4'>HTTP Request</h3>
+        <p><code>DELETE https://api.staging.HAAS.com/contacts/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-4'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>The ID of the AddressBookEntry to delete (can also be Wallet ID)</td>
+            </tr>
+            </tbody></table>
+        <h1 id='fundrequest'>FundRequest</h1>
+        <p>Any HAAS user can request funds from another user. The user the funds were requested from can then accept or decline the request.</p>
+        <h2 id='get-all-fundrequests'>Get All FundRequests</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/requests"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns an array of FundRequests like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38ac2a4d-8ee1-45e5-ae66-6eaeb797c099"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"requestedFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ff7bc14-3f1e-4dca-a88c-9c09e130c10e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"requestedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ba207cf1-aa3c-4337-b8d6-c8fc7740d9c3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:33:11+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:46:26+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.15"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+        <p>This endpoint returns an array of all FundRequests.  </p>
+        <h3 id='http-request-5'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/requests</code>  </p>
+        <h3 id='query-parameters'>Query Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>filter</td>
+                <td><code>incoming</code> or <code>outgoing</code></td>
+                <td>Filter results by direction.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='get-a-specific-fundrequest'>Get a Specific FundRequest</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/requests/f1bb4c24-fb90-4836-982e-4a66fb2e5c50"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns a single FundRequest like this:</p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38ac2a4d-8ee1-45e5-ae66-6eaeb797c099"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"requestedFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ff7bc14-3f1e-4dca-a88c-9c09e130c10e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"requestedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ba207cf1-aa3c-4337-b8d6-c8fc7740d9c3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:33:11+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:46:26+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.15"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+        <p>This endpoint retrieves a specific FundRequest instance.  </p>
+        <h3 id='http-request-6'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/requests/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-5'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the entity to fetch.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='create-a-fundrequest'>Create a FundRequest</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/requests/users/f1bb4c24-fb90-4836-982e-4a66fb2e5c50"</span>
+ -X POST
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{
+         "amount": "22.5",
+         "currency": "ETH"
+     }'</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns the created FundRequest like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38ac2a4d-8ee1-45e5-ae66-6eaeb797c099"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"requestedFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ff7bc14-3f1e-4dca-a88c-9c09e130c10e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:20:34+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"requestedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ba207cf1-aa3c-4337-b8d6-c8fc7740d9c3"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vstrac10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:33:11+01:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T07:46:26+01:00"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.15"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-12T08:13:34+01:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+        <p>This endpoint creates a new FundRequest.  </p>
+        <h3 id='http-request-7'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/requests/users/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-6'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the user to request funds from.</td>
+            </tr>
+            </tbody></table>
+        <h3 id='body-parameters'>Body Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>amount</td>
+                <td><code>string</code></td>
+                <td>The amount of funds to request.</td>
+            </tr>
+            <tr>
+                <td>currency</td>
+                <td><code>string</code></td>
+                <td>The currency of the request (optional, defaults to ETH).</td>
+            </tr>
+            </tbody></table>
+        <h2 id='update-a-fundrequest'>Update a FundRequest</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/requests/90cec703-9783-4536-9f5c-a57381e8451c"</span>
+ -X PUT
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{
+         "amount": "55"
+     }'</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns the updated FundRequest like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">   
+    </span><span class="err">...</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55.0"</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/requests/90cec703-9783-4536-9f5c-a57381e8451c"</span>
+ -X PUT
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{
+         "accepted": 1"
+     }'</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns the accepted FundRequest like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">   
+    </span><span class="err">...</span><span class="w">
+    </span><span class="s2">"accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="s2">"
+    ...
+}
+</span></code></pre>
+        <p>This endpoint updates a FundRequest.  </p>
+        <h3 id='http-request-8'>HTTP Request</h3>
+        <p><code>PUT https://api.staging.HAAS.com/requests/users/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-7'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the FundRequest to update.</td>
+            </tr>
+            </tbody></table>
+        <h3 id='body-parameters-2'>Body Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>amount</td>
+                <td><code>string</code></td>
+                <td>The amount of funds to request.</td>
+            </tr>
+            <tr>
+                <td>currency</td>
+                <td><code>string</code></td>
+                <td>The currency of the request (optional, defaults to ETH).</td>
+            </tr>
+            </tbody></table>
+        <h1 id='payment'>Payment</h1>
+        <aside class="warning">NEED TO REVIEW AND ADD FIELDS</aside>
+
+        <h2 id='get-all-payments'>Get All Payments</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/payments"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w">
+</span></code></pre>
+        <p>This endpoint retrieves all Payments.  </p>
+        <h3 id='http-request-9'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/payments</code>  </p>
+        <h3 id='query-parameters-2'>Query Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>filter</td>
+                <td><code>incoming</code> or <code>outgoing</code></td>
+                <td>Filter results by direction.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='get-a-specific-payment'>Get a Specific Payment</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/payments/2"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint retrieves a specific Payment instance.  </p>
+        <h3 id='http-request-10'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/payments/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-8'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the entity to fetch.</td>
+            </tr>
+            </tbody></table>
+        <h1 id='transaction'>Transaction</h1><h2 id='get-all-transactions'>Get All Transactions</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/transactions"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint retrieves all Transactions.  </p>
+        <h3 id='http-request-11'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/transactions</code>  </p>
+        <h3 id='query-parameters-3'>Query Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>filter</td>
+                <td><code>incoming</code> or <code>outgoing</code></td>
+                <td>Filter results by direction.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='get-a-specific-transaction'>Get a Specific Transaction</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/transactions/2"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint retrieves a specific Transaction instance.  </p>
+        <h3 id='http-request-12'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/transactions/&lt;ID&gt;</code>  </p>
+        <h3 id='url-parameters-9'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the entity to fetch.</td>
+            </tr>
+            </tbody></table>
+        <h1 id='user'>User</h1><h2 id='register-a-user-account'>Register a User Account</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/register"</span>
+ -X POST 
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span> 
+ -d @payload
+</code></pre>
+        <p>With payload in body (showing the minimun required fields first, and then with all the rest again):</p>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EMAIL"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USERNAME"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"plainPassword"</span><span class="p">:</span><span class="s2">"PASSWORD"</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testemaieel@email.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"username1330"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"plainPassword"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x3F8c6d63209078eF7441150cF7100dF7500314d1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terminus #1"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"privacy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"privateAccount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"enableAccountDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addressBookPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"acceptsNewsletter"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hardin"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fiatCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"preferredCurrencyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiat"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SI"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MK"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13969eda-e8c5-4683-ab2b-40010d47ea08"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testemaieel@email.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"avatarUrl"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terminus #1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x3F8c6d63209078eF7441150cF7100dF7500314d1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"privacy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"privateAccount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"enableAccountDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"addressBookPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"acceptsNewsletter"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"notificationSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"enableNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emailNotifications"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deviceNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"browserNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"notificationFrequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hardin"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"fiatCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"preferredCurrencyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiat"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SI"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MK"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/register</code>  </p>
+        <h2 id='request-password-reset-link'>Request Password Reset Link</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/password/request"</span>
+ -X POST
+ -H <span class="s2">"Content-Type: application/json"</span> 
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{"username": "YOUR-USERNAME-OR-EMAIL"}'</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[]</span><span class="w">
+</span></code></pre>
+        <p>This endpoint generates a password reset token and delivers it to User&#39;s email.  </p>
+        <h3 id='http-request-14'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/password/request</code>  </p>
+        <h3 id='body-parameters-3'>Body Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>username</td>
+                <td><code>email</code> or <code>username</code></td>
+                <td>Email / username for user requesting to reset.</td>
+            </tr>
+            </tbody></table>
+        <h2 id='reset-password'>Reset Password</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/password/reset/&lt;CONFIRMATION-TOKEN&gt;"</span>
+ -X POST
+ -H <span class="s2">"Content-Type: application/json"</span> 
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>  
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="w">
+</span></code></pre>
+        <p>This endpoint validates the CONFIRMATION-TOKEN and if valid updates the User account&#39;s password.  </p>
+        <h3 id='http-request-15'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/password/reset/&lt;CONFIRMATION-TOKEN&gt;</code></p>
+        <h3 id='url-parameters-10'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>token</td>
+                <td><code>string</code></td>
+                <td>Password reset confirmation token.</td>
+            </tr>
+            </tbody></table>
+        <h1 id='settings'>Settings</h1>
+        <p>A Settings object holds User&#39;s preferences and parameters organised in the following groups:  </p>
+
+        <ul>
+            <li>Account settings</li>
+            <li>Wallet settings</li>
+            <li>Privacy settings</li>
+            <li>Notification settings</li>
+        </ul>
+        <h2 id='get-all-settings-fully-loaded'>Get All Settings Fully-Loaded</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/settings"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns the combined settings object:</p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x3F8c6d63209078eF7441150cF7100dF7500314d1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terminus #1"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"privacy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"privateAccount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"enableAccountDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"addressBookPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"acceptsNewsletter"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"notificationSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"enableNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"emailNotifications"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deviceNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"browserNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notificationFrequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hardin"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fiatCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"preferredCurrencyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiat"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SI"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MK"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint retrieves a fully loaded User Settings object.  </p>
+        <h3 id='http-request-16'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/me/settings</code>  </p>
+        <h2 id='update-settings'>Update Settings</h2>
+        <p>The combined settings endpoint can accept a partial settings object, so no need to pass everything to server if you just need to
+            change a couple of properties, for example here I&#39;m only changing the <code>showActivityStatus</code> flag of the <code>privacy</code> group:</p>
+        <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/settings"</span>
+ -X PATCH
+ -H <span class="s2">"Content-Type: application/json"</span> 
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span> 
+ -d <span class="s1">'{"privacy": {"showActivityStatus": true}}'</span>
+</code></pre>
+        <blockquote>
+            <p>However, the endpoint will always return the full settings response:</p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"78826934-bc44-4866-b09a-e650244e98c5"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+    </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x3F8c6d63209078eF7441150cF7100dF7500314d1"</span><span class="p">,</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"privacy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"notificationSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"browserNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint retrieves a fully loaded Settings object for the current user and updates it. </p>
+        <h3 id='http-request-17'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/me/settings</code>  </p>
+        <h2 id='get-account-settings'>Get Account Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/account"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hardin"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fiatCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preferredCurrencyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crpt"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"it"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SI"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint returns user&#39;s AccountSettings instance.</p>
+        <h3 id='http-request-18'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/me/account</code>  </p>
+        <h2 id='update-account-settings'>Update Account Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/account"</span>
+ -X PATCH
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{}'</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvor"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dateOfBirth"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hardin"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fiatCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preferredCurrencyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crpt"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"it"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SI"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint updates user&#39;s AccountSettings instance.</p>
+        <h3 id='http-request-19'>HTTP Request</h3>
+        <p><code>PATCH https://api.staging.HAAS.com/me/account</code>  </p>
+        <h2 id='get-privacy-settings'>Get Privacy Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/privacy"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"privateAccount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"enableAccountDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"addressBookPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"acceptsNewsletter"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint returns user&#39;s PrivacySettings instance.</p>
+        <h3 id='http-request-20'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/me/privacy</code>  </p>
+        <h2 id='update-privacy-settings'>Update Privacy Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/privacy"</span>
+ -X PATCH
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{
+       "showActivityStatus": false,
+       "privateAccount": false,
+    }'</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"showActivityStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"privateAccount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"enableAccountDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"addressBookPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"acceptsNewsletter"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint updates user&#39;s PrivacySettings instance.</p>
+        <h3 id='http-request-21'>HTTP Request</h3>
+        <p><code>PATCH https://api.staging.HAAS.com/me/privacy</code>  </p>
+        <h2 id='get-notification-settings'>Get Notification Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/notifications"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"browserNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"enableNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"emailNotifications"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deviceNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notificationFrequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint returns user&#39;s NotificationSettings instance.</p>
+        <h3 id='http-request-22'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/me/notifications</code>  </p>
+        <h2 id='update-notification-settings'>Update Notification Settings</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/me/notification"</span>
+ -X PATCH
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+ -d <span class="s1">'{
+        "enableNotifications": true
+     }'</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"browserNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"enableNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"emailNotifications"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deviceNotifications"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notificationFrequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <p>This endpoint updates current user&#39;s NotificationSettings instance.</p>
+        <h3 id='http-request-23'>HTTP Request</h3>
+        <p><code>PATCH https://api.staging.HAAS.com/me/notifications</code>  </p>
+        <h1 id='userdevice'>UserDevice</h1>
+        <p>A UserDevice object represents a User&#39;s device running the client application. The client application is expected to periodically call the UserDevice update endpoint with latest device data. At this moment a UserDevice can store information required for mobile device notification delivery (like device ID and tokens).</p>
+
+        <p>A User can have many devices, and a device can only belong to one User. This enables per-device notification settings (if ever needed).</p>
+        <h2 id='get-all-userdevices'>Get All UserDevices</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/devices"</span>
+ -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w">  
+</span></code></pre>
+        <p>This endpoint retrieves a list of UserDevice objects. Each objects represents an actual device.</p>
+        <h3 id='http-request-24'>HTTP Request</h3>
+        <p><code>GET https://api.staging.HAAS.com/devices</code>  </p>
+        <h2 id='ping-userdevice'>Ping UserDevice</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/devices"</span>
+ -X POST
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns JSON structured like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="err">TBD</span><span class="w"> 
+</span></code></pre>
+        <p>This endpoint listens for device updates OTF.</p>
+        <h3 id='http-request-25'>HTTP Request</h3>
+        <p><code>POST https://api.staging.HAAS.com/devices</code>  </p>
+        <h3 id='url-parameters-11'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>device_uuid</td>
+                <td><code>UUID</code></td>
+                <td>Manufacturer ID of the device.</td>
+            </tr>
+            <tr>
+                <td>device_token</td>
+                <td><code>string</code></td>
+                <td>Manufacturer token of the device.</td>
+            </tr>
+            <tr>
+                <td>data</td>
+                <td><code>array</code></td>
+                <td>Additional device data (optional).</td>
+            </tr>
+            </tbody></table>
+        <h2 id='remove-a-userdevice'>Remove a UserDevice</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.staging.HAAS.com/devices/&lt;DEVICE-ID&gt;"</span>
+ -X DELETE
+ -H <span class="s2">"Content-Type: application/json"</span>  
+ -H <span class="s2">"Authorization: Bearer YOUR-TOKEN"</span>
+</code></pre>
+        <blockquote>
+            <p>The above command returns an empty array like this:  </p>
+        </blockquote>
+        <pre class="highlight json tab-json"><code><span class="p">[]</span><span class="w">
+</span></code></pre>
+        <p>This endpoint deletes a specific UserDevice by ID.</p>
+        <h3 id='http-request-26'>HTTP Request</h3>
+        <p><code>DELETE https://api.staging.HAAS.com/devices/&lt;DEVICE-ID&gt;</code>  </p>
+        <h3 id='url-parameters-12'>URL Parameters</h3>
+        <table><thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>id</td>
+                <td><code>UUID</code></td>
+                <td>ID of the entity to fetch.</td>
+            </tr>
+            </tbody></table>
+        <h1 id='form-validation-errors'>Form Validation Errors</h1><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Validation Failed"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"The email is not valid."</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"Please enter a username."</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"plainPassword"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"first"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                    </span><span class="s2">"second"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"firstname"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"lastname"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+        <blockquote>
+            <p>The above example shows form error response when posting invalid user registration form: </p>
+        </blockquote>
+
+        <p>The API returns a special error response when a form fails validation. The response contains expected form fields with error messages.  </p>
+        <h1 id='errors-amp-response-codes'>Errors &amp; Response Codes</h1>
+        <p>The HAAS API uses the following error codes:</p>
+
+        <table><thead>
+            <tr>
+                <th>Code</th>
+                <th>Status</th>
+                <th>Meaning</th>
+            </tr>
+            </thead><tbody>
+            <tr>
+                <td>400</td>
+                <td>Bad Request</td>
+                <td>Your request is invalid.</td>
+            </tr>
+            <tr>
+                <td>401</td>
+                <td>Unauthorized</td>
+                <td>Your token is invalid.</td>
+            </tr>
+            <tr>
+                <td>403</td>
+                <td>Forbidden</td>
+                <td>Your token is invalid or not granted.</td>
+            </tr>
+            <tr>
+                <td>404</td>
+                <td>Not Found</td>
+                <td>The specified item could not be found.</td>
+            </tr>
+            <tr>
+                <td>405</td>
+                <td>Method Not Allowed</td>
+                <td>You tried to access with an invalid method.</td>
+            </tr>
+            <tr>
+                <td>406</td>
+                <td>Not Acceptable</td>
+                <td>You requested a format that isn&#39;t json.</td>
+            </tr>
+            <tr>
+                <td>409</td>
+                <td>Conflict</td>
+                <td>Conflict conditions occurred.</td>
+            </tr>
+            <tr>
+                <td>429</td>
+                <td>Too Many Requests</td>
+                <td>You&#39;re requesting too fast.</td>
+            </tr>
+            <tr>
+                <td>500</td>
+                <td>Internal Server Error</td>
+                <td>We had a problem with our server. Try again later.</td>
+            </tr>
+            <tr>
+                <td>501</td>
+                <td>Not Implemented Yet</td>
+                <td>Not Implemented Yet.</td>
+            </tr>
+            <tr>
+                <td>503</td>
+                <td>Service Unavailable</td>
+                <td>We&#39;re temporarily offline for maintenance. Please try again later.</td>
+            </tr>
+            </tbody></table>
+
+        <aside class="notice">
+            On success the API will return 200, 201 or 204, depending on context.
+        </aside>
+        <h1 id='identity-amp-identifiers'>Identity &amp; Identifiers</h1>
+        <p>All entities in the HAAS data model have a common identity strategy: a generated UUID string called <code>id</code> (in most cases this is the table&#39;s primary key).
+            This property is always part of the API response so clients can use it for identification purposes (like associ..).</p>
+
+        <p>A User entity has 2 additional unique properties - username, email - that can be used to identify the User. </p>
+
+        <p>Finally, another identity strategy is available on any entity that has a property of WalletAddress type. In HAAS
+            model there are currently two such entities - User and Contact.</p>
+
+    </div>
+    <div class="dark-box">
+        <div class="lang-selector">
+            <a href="#" data-language-name="shell">shell</a>
+            <a href="#" data-language-name="http">http</a>
+            <a href="#" data-language-name="php">php</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

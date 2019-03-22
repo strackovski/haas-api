@@ -1,0 +1,34 @@
+{% extends "@mail/base.html.twig" %}
+
+{% block title %}
+    Your Magic Link
+{% endblock %}
+
+{% block name %}
+    Hello {{ username }}
+{% endblock %}
+
+{% block content %}
+    Please, use the magic link bellow to log in to HAAS.
+{% endblock %}
+
+{% block btn %}
+    <tr>
+        <td style="padding: 0 40px 40px;padding-top: 40px; padding-bottom: 40px; font-family: sans-serif; font-size:
+        15px; line-height: 140%;
+        color: #555555;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
+                <tr>
+                    <td style="border-radius: 3px;background: #1185c2; text-align: center;"
+                        class="button-td">
+                        <a href="{{ url }}"
+                           style="background: #1185c2; border: 15px solid #1185c2; font-family: sans-serif; font-size: 13px; line-height: 110%; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;"
+                           class="button-a">
+                            <span style="color:#ffffff;" class="button-link">&nbsp;LOG IN&nbsp;USING YOUR MAGIC LINK&nbsp;&nbsp;&nbsp;</span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+{% endblock %}

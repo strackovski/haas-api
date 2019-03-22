@@ -1,0 +1,13 @@
+set :deploy_config_path, 'config/deploy.rb'
+set :stage_config_path, 'stages'
+require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/scm/git'
+require 'capistrano/symfony'
+require 'capistrano/file-permissions'
+require 'capistrano/touch-linked-files'
+require 'capistrano/bundler'
+require 'capistrano/rvm'
+
+install_plugin Capistrano::SCM::Git
+Dir.glob("../lib/capistrano/tasks/*.rake").each { |r| import r }
