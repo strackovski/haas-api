@@ -20,6 +20,8 @@ set :permission_method, :acl
 set :file_permissions_users, ["www-data"]
 set :file_permissions_paths, ["var/log", "var/cache"]
 
+set :composer_install_flags, '--no-dev --no-interaction --optimize-autoloader'
+
 set :log_path,  fetch(:var_path) + "/log"
 set :linked_dirs, [fetch(:log_path), 'var/pids']
 set :linked_files, ["var/jwt/private.pem", "var/jwt/public.pem"]
