@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Cheer;
+use App\Entity\EntityInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -39,16 +41,57 @@ abstract class AbstractRepository implements RepositoryInterface
         $this->repository = $repository;
     }
 
+    /**
+     * @return array
+     */
+    public function aggregateData() {
+        return [
+//            "users" => $this->findEntity(User::class),
+            "users" => $this->getUsers(),
+            "cheers"=> $this->getCheers()
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCheers() {
+        return $this->entityManager->getRepository(Cheer::class)->findAll();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers() {
+        return $this->createQueryBuilder('u')
+                    ->select('u')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * @param       $id
+     * @param array $criteria
+     * @param array $options
+     *
+     * @return object|null
+     */
     public function findOneById($id, array $criteria = [], array $options = [])
     {
         return $this->repository->findOneById($id, $criteria, $options);
     }
 
+    /**
+     * @return string
+     */
     public function getEntityClass()
     {
         return $this->repository->getClassName();
     }
 
+    /**
+     * @param EntityRepository $repository
+     */
     public function setRepository(EntityRepository $repository): void
     {
         // TODO: Implement setRepository() method.
@@ -66,9 +109,33 @@ abstract class AbstractRepository implements RepositoryInterface
         return $this->entityManager->getRepository(User::class)->findOneBy($criteria);
     }
 
+    /**
+     * @param EntityInterface $entity
+     */
+    public function persist(EntityInterface $entity) {
+        $this->entityManager->persist($entity);
+    }
+
+    /**
+     * @param       $entity
+     * @param array $criteria
+     *
+     * @return object|null
+     */
     public function findEntityBy($entity, array $criteria)
     {
         return $this->entityManager->getRepository($entity)->findOneBy($criteria);
+    }
+
+    /**
+     * @param       $entity
+     * @param array $criteria
+     *
+     * @return object|null
+     */
+    public function findEntity($entity)
+    {
+        return $this->entityManager->getRepository($entity)->findAll();
     }
 
     /**

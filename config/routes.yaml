@@ -45,3 +45,13 @@ api.mlink_redir:
     controller: App\Controller\Api\UserController::magicLinkRedirect
     path: /mlink/{mlinkHash}
     methods: GET
+
+api.user.cheer:
+    controller: App\Controller\Api\UserController::addCheer
+    path: /users/{userId}/cheer
+    methods: POST
+
+api.data:
+    controller: App\Controller\Api\UserController::getAll
+    path: /data/aggregate
+    methods: GET

@@ -3,8 +3,8 @@
 namespace App\Controller\Api;
 
 use App\Controller\AbstractRestController;
+use App\Entity\Cheer;
 use App\Entity\User;
-use App\Entity\Wallet;
 use App\Event\MagicLinkRequestedEvent;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -15,6 +15,7 @@ use FOS\UserBundle\Event\GetResponseNullableUserEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Mailer\Mailer;
+use \Symfony\Component\Security\Core\User\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
@@ -82,8 +83,43 @@ class UserController extends AbstractRestController
     }
 
     /**
+     * @param UserInterface $user
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getAll(UserInterface $user, Request $request)
+    {
+        return $this->response($this->repository->aggregateData(), 200, ['public']);
+    }
+
+    /**
+     * @param               $userId
+     * @param UserInterface $user
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addCheer($userId, UserInterface $user, Request $request)
+    {
+        $forUser = $this->repository->findOneBy(['id' => $userId]);
+
+        if (is_null($forUser)) {
+            throw $this->createNotFoundException();
+        }
+
+        $c = new Cheer($forUser);
+        $this->repository->save($c);
+
+
+        return $this->response($c, 200, ['public']);
+    }
+
+    /**
      * @param         $mlinkHash
      * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function magicLinkRedirect($mlinkHash, Request $request) {
         return $this->redirect(sprintf("haas://magic-link/%s", $mlinkHash));
@@ -114,12 +150,15 @@ class UserController extends AbstractRestController
     }
 
     /**
-     * @param string  $mLink
-     * @param Request $request
+     * @param Request                  $request
      *
+     * @param JWTTokenManagerInterface $JWTmanager
+     * @param JWTEncoderInterface      $JWTEncoder
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Exception
      * @Rest\View()
      * @Rest\Post("/auth/login")
-     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function magicLinkLoginAction(Request $request, JWTTokenManagerInterface $JWTmanager, JWTEncoderInterface $JWTEncoder)
     {
@@ -156,8 +195,6 @@ class UserController extends AbstractRestController
         } catch (\Exception $e) {
             return $this->response('Error', 401);
         }
-
-
     }
 
     /**
@@ -201,17 +238,19 @@ class UserController extends AbstractRestController
                 $this->dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
                 $user->addRole('ROLE_USER');
 
-                if (self::MLINK_NO_USER_PWD == true) {
-                    $plainPassword = sha1(mt_rand(0, 12));
-                    $user->setEnabled(true);
-                    $user->setMLinkHash(md5(time()));
-                    $user->setMLinkValidUntil((new \DateTime())->add(new \DateInterval("PT2H")));
+//                if (self::MLINK_NO_USER_PWD == true) {
+//                    $plainPassword = sha1(mt_rand(0, 12));
+//                    $user->setEnabled(true);
+//                    $user->setMLinkHash(md5(time()));
+//                    $user->setMLinkValidUntil((new \DateTime())->add(new \DateInterval("PT2H")));
+//
+//                    $this->dispatcher->dispatch(MagicLinkRequestedEvent::NAME, new MagicLinkRequestedEvent($user));
+//
+//                } else {
+//                    $plainPassword = $data['plainPassword'];
+//                }
 
-                    $this->dispatcher->dispatch(MagicLinkRequestedEvent::NAME, new MagicLinkRequestedEvent($user));
-
-                } else {
-                    $plainPassword = $data['plainPassword'];
-                }
+                $plainPassword = $data['plainPassword'];
 
                 $user->setPassword($encoder->encodePassword($user, $plainPassword));
                 try {
@@ -421,53 +460,6 @@ class UserController extends AbstractRestController
     }
 
     /**
-     * Get wallet for current user.
-     *
-     * @param User    $user
-     * @param Request $request
-     *
-     * @return null|\Symfony\Component\Form\FormInterface|\Symfony\Component\HttpFoundation\Response
-     *
-     * @Rest\Get("/me/wallet")
-     */
-    public function getWalletAction(User $user, Request $request)
-    {
-        return $this->response($this->fetchUser()->getWallet(), 200, ['settings_wallet']);
-    }
-
-    /**
-     * Update wallet for current user.
-     *
-     * @param User    $user
-     * @param Request $request
-     *
-     * @return null|\Symfony\Component\Form\FormInterface|\Symfony\Component\HttpFoundation\Response
-     *
-     * @Rest\Patch("/me/wallet")
-     */
-    public function patchWalletAction(User $user, Request $request)
-    {
-        try {
-            if (is_null($user->getWallet())) {
-                $user->setWallet($wallet = new Wallet());
-                $wallet->setUser($user);
-            }
-
-            $status = $this->formProcessor->process($user->getWallet(), $request);
-        } catch (\Exception $e) {
-            return $this->response($e->getMessage(), 500);
-        }
-
-        if ($status instanceof Wallet) {
-            $this->repository->save($status);
-
-            return $this->response($status, 200, ['settings_wallet']);
-        }
-
-        return $this->response($this->getFormErrors($status), 400);
-    }
-
-    /**
      * @param User    $user
      * @param Request $request
      *
@@ -523,40 +515,5 @@ class UserController extends AbstractRestController
     public function checkEmailAction()
     {
         return $this->response([], 200);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return null|\Symfony\Component\Form\FormInterface|\Symfony\Component\HttpFoundation\Response
-     *
-     * @Rest\Post("/accounts")
-     */
-    public function checkUserExists(Request $request)
-    {
-        if (!$request->headers->has('app-token')) {
-            throw $this->createAccessDeniedException();
-        }
-
-        if ($request->headers->get('app-token') !== $this->getParameter('app_token')) {
-            throw $this->createAccessDeniedException('Invalid credentials.');
-        }
-
-        $username = $request->request->get('username', false);
-        $email = $request->request->get('email', false);
-
-        if ($username) {
-            if ($user = $this->repository->findOneBy(['username' => $username])) {
-                return $this->response([], 200);
-            }
-        }
-
-        if ($email) {
-            if ($user = $this->repository->findOneBy(['email' => $email])) {
-                return $this->response([], 200);
-            }
-        }
-
-        return $this->response([], 404);
     }
 }

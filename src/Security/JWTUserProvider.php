@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -28,13 +29,19 @@ class JWTUserProvider implements UserProviderInterface
     private $repository;
 
     /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    /**
      * @param EntityManagerInterface $em
      * @param UserRepository         $repository
      */
-    public function __construct(EntityManagerInterface $em, UserRepository $repository)
+    public function __construct(EntityManagerInterface $em, UserRepository $repository, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $em;
         $this->repository = $repository;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -46,12 +53,7 @@ class JWTUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($userId)
     {
-        return $this->repository->findUser($userId);
-
-        // Disable db check
-        // $u = new User();
-        // $u->setUsername($userId);
-        // $u->addRole('USER');
+        return $this->repository->findOneBy(['username' => $userId]);
     }
 
     /**

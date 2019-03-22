@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,9 +34,20 @@ class User extends BaseUser implements EntityInterface
     protected $id;
 
     /**
-     * @Groups({"list", "settings_account", "settings", "user_search"})
+     * @Groups({"list", "public"})
      */
     protected $email;
+
+    /**
+     * @var string
+     * @Assert\Type("string")
+     * @Assert\Url(
+     *    checkDNS = "ANY"
+     * )
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"list", "public"})
+     */
+    protected $avatarUrl;
 
     /**
      *
@@ -57,15 +70,20 @@ class User extends BaseUser implements EntityInterface
     private $mLinkLastSent;
 
     /**
-     * @var string
-     * @Assert\Type("string")
-     * @Assert\Url(
-     *    checkDNS = "ANY"
-     * )
-     * @ORM\Column(type="string", nullable=true)
-     * @Groups({"user_profile_public"})
+     * @ORM\OneToMany(targetEntity="Cheer", mappedBy="forUser")
+     * @Groups({"list", "public"})
      */
-    protected $avatarUrl;
+    private $cheers;
+
+    /**
+     * User constructor.
+     *
+     * @param $cheers
+     */
+    public function __construct()
+    {
+        $this->cheers = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -109,7 +127,7 @@ class User extends BaseUser implements EntityInterface
     }
 
     /**
-     * @param  string $mLinkValidUntil
+     * @param \DateTime $mLinkValidUntil
      *
      * @return User
      */
@@ -165,6 +183,24 @@ class User extends BaseUser implements EntityInterface
     public function setAvatarUrl(string $avatarUrl): self
     {
         $this->avatarUrl = $avatarUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCheers(): Collection
+    {
+        return $this->cheers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function addCheer(Cheer $cheer)
+    {
+        $this->cheers->add($cheer);
 
         return $this;
     }

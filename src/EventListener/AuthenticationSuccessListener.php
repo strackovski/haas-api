@@ -53,7 +53,6 @@ class AuthenticationSuccessListener
             'roles' => $user->getRoles()
         ];
 
-        $data['email'] = $user->getEmail();
         $data['refresh_token'] = $this->jwtEncoder->encode($refreshToken);
         $data['valid_until'] = strtotime('+1 day', time());
         $data['ttl'] = 86400;
