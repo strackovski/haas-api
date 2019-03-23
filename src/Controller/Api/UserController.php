@@ -132,6 +132,7 @@ class UserController extends AbstractRestController
         $c = new Cheer($forUser, $user);
         $c->setText($text);
         $this->repository->save($c);
+        file_get_contents("https://e17da4dc.ngrok.io/users/assets/move/".$user->getId()."/".$forUser->getId()."/");
 
         return $this->response($c, 200, ['public']);
     }

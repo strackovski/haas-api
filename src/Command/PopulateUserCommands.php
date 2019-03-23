@@ -3,10 +3,12 @@
 namespace App\Command;
 
 use App\Entity\HelpItem;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class PopulateHelpCommand
@@ -24,14 +26,21 @@ class PopulateUserCommands extends Command
     private $em;
 
     /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+
+    /**
      * PopulateHelpCommand constructor.
      *
      * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         parent::__construct();
         $this->em = $em;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -50,5 +59,64 @@ class PopulateUserCommands extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    }
+        $users = [
+            [
+                "id" => null,
+                "username" => "sara.stojanovski@dlabs.si",
+                "firstname" => "Sara",
+                "lastname" => "Stojanovski",
+            ],
+            [
+                "id" => null,
+                "username" => "tim.sabanov@dlabs.si",
+                "firstname" => "Tim",
+                "lastname" => "Sabanov",
+            ],
+            [
+                "id" => null,
+                "username" => "ivan.romanovski@dlabs.si",
+                "firstname" => "Ivan",
+                "lastname" => "Romanovski"
+            ],
+            [
+                "id" => null,
+                "username" => "vladimir.strackovski@dlabs.si",
+                "firstname" => "Vladimir",
+                "lastname" => "Strackovski"
+            ],
+            [
+                "id" => null,
+                "username" => "eva.jersin@dlabs.si",
+                "firstname" => "Eva",
+                "lastname" => "Jersin"
+            ]
+        ];
+
+        foreach ($users as $user) {
+            $u = new User();
+            $u->setEmail($user['username']);
+            $u->setUsername($user['username']);
+            $u->setUsernameCanonical($user['username']);
+            $u->setEmailCanonical($user['username']);
+            $u->setFirstName($user['firstname']);
+            $u->setLastName($user['lastname']);
+            $u->setPassword($this->encoder->encodePassword($u, "test123"));
+            $u->setEnabled(true);
+
+            $this->em->persist($u);
+            $this->em->flush();
+
+            file_get_contents("https://e17da4dc.ngrok.io/users/add/user/".$user->getId()."/");
+        }
+
+        foreach ($users as $user) {
+            file_get_contents("https://e17da4dc.ngrok.io/users/assets/deposit/id/".$user->getId()."/5000");
+        }
+
+
+
+
+
+
+        }
 }

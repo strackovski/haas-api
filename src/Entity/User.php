@@ -47,6 +47,27 @@ class User extends BaseUser implements EntityInterface
      */
     protected $avatarUrl;
 
+
+    /**
+     *
+     * @var string
+     * @Assert\Type("string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"list", "public"})
+     */
+    private $firstName;
+
+
+    /**
+     *
+     * @var string
+     * @Assert\Type("string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"list", "public"})
+     */
+    private $lastName;
+
+
     /**
      *
      * @var string
@@ -54,6 +75,7 @@ class User extends BaseUser implements EntityInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $mLinkHash;
+
 
     /**
      * @var string
@@ -80,6 +102,13 @@ class User extends BaseUser implements EntityInterface
     {
         parent::__construct();
         $this->cheers = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -193,7 +222,7 @@ class User extends BaseUser implements EntityInterface
     {
 //        return $this->avatarUrl;
 
-        return "https://laurauinteriordesign.com/wp-content/uploads/2018/03/avatar-placeholder.png";
+        return "https://laurauinteriordesign.com/wp-content/uploads/2018/03/avatar-placeholder.pngw";
     }
 
     /**
@@ -227,4 +256,38 @@ class User extends BaseUser implements EntityInterface
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+
 }

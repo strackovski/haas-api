@@ -6,8 +6,10 @@ dist/
 nbdist/
 .nb-gradle/
 composer.phar
-
+token.json
+credentials.json
 /.idea
+/var/data
 
 ### PhpStorm ###
 # User-specific stuff
