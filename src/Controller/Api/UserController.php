@@ -105,10 +105,10 @@ class UserController extends AbstractRestController
         $c = new Cheer($cheer->getForUser(), $user);
         $c->setParent($cheer);
         $this->repository->save($c);
-//        $this->repository->save($user);
 
-
-        return $this->response($c, 200, ['public']);
+        return $this->response([
+            "id" => $c->getId()
+        ], 200, ['public']);
     }
 
     /**
