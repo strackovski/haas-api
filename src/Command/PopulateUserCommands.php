@@ -93,6 +93,12 @@ class PopulateUserCommands extends Command
         ];
 
         foreach ($users as $user) {
+
+            if ($this->em->getRepository(User::class)->findOneBy(['username' => $user['username']])) {
+                echo "Already exists..." . PHP_EOL;
+                continue;
+            }
+
             $u = new User();
             $u->setEmail($user['username']);
             $u->setUsername($user['username']);
@@ -105,12 +111,6 @@ class PopulateUserCommands extends Command
 
             $this->em->persist($u);
             $this->em->flush();
-
-            file_get_contents("https://e17da4dc.ngrok.io/users/add/user/".$user->getId()."/");
-        }
-
-        foreach ($users as $user) {
-            file_get_contents("https://e17da4dc.ngrok.io/users/assets/deposit/id/".$user->getId()."/5000");
         }
 
 

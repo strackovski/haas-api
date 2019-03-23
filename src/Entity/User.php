@@ -222,7 +222,7 @@ class User extends BaseUser implements EntityInterface
     {
 //        return $this->avatarUrl;
 
-        return "https://laurauinteriordesign.com/wp-content/uploads/2018/03/avatar-placeholder.pngw";
+        return "https://laurauinteriordesign.com/wp-content/uploads/2018/03/avatar-placeholder.png";
     }
 
     /**
