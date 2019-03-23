@@ -4,16 +4,16 @@ namespace App\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
-use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
 
 /**
  * Class RefreshTokenAuthenticator
@@ -22,10 +22,8 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
  * @author       Vladimir Strackovski <vladimir.strackovski@gmail.com>
  * @copyright    2019 Vladimir Strackovski
  */
-class RefreshTokenAuthenticator implements
-    SimplePreAuthenticatorInterface,
-    AuthenticationFailureHandlerInterface,
-    AuthenticationSuccessHandlerInterface
+class RefreshTokenAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface,
+                                           AuthenticationSuccessHandlerInterface
 {
     /** @var EntityManagerInterface $em */
     private $em;
@@ -40,8 +38,8 @@ class RefreshTokenAuthenticator implements
     private $jwtEncoder;
 
     /**
-     * @param EntityManagerInterface $em
-     * @param JWTEncoderInterface $jwt
+     * @param EntityManagerInterface                $em
+     * @param JWTEncoderInterface                   $jwt
      * @param AuthenticationSuccessHandlerInterface $successHandler
      * @param AuthenticationFailureHandlerInterface $failureHandler
      */
@@ -59,7 +57,8 @@ class RefreshTokenAuthenticator implements
 
     /**
      * @param Request $request
-     * @param $providerKey
+     * @param         $providerKey
+     *
      * @return PreAuthenticatedToken
      */
     public function createToken(Request $request, $providerKey)
@@ -77,18 +76,17 @@ class RefreshTokenAuthenticator implements
         }
 
         return new PreAuthenticatedToken(
-            'anon.',
-            $refreshToken,
-            $providerKey
+            'anon.', $refreshToken, $providerKey
         );
     }
 
     /**
      * Verify given refresh token against a user provider and provider key
      *
-     * @param TokenInterface $token
+     * @param TokenInterface        $token
      * @param UserProviderInterface $userProvider
-     * @param $providerKey
+     * @param                       $providerKey
+     *
      * @return PreAuthenticatedToken
      * @throws \Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException
      */
@@ -115,10 +113,7 @@ class RefreshTokenAuthenticator implements
         $user = $userProvider->loadUserByUsername($decodedRefreshToken['username']);
 
         return new PreAuthenticatedToken(
-            $user,
-            $refreshToken,
-            $providerKey,
-            $user->getRoles()
+            $user, $refreshToken, $providerKey, $user->getRoles()
         );
     }
 
@@ -126,7 +121,8 @@ class RefreshTokenAuthenticator implements
      * Check if token is supported
      *
      * @param TokenInterface $token
-     * @param $providerKey
+     * @param                $providerKey
+     *
      * @return bool
      */
     public function supportsToken(TokenInterface $token, $providerKey)
@@ -137,8 +133,9 @@ class RefreshTokenAuthenticator implements
     /**
      * Handle authentication failure event
      *
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $exception
+     *
      * @return Response
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -147,14 +144,16 @@ class RefreshTokenAuthenticator implements
         if (!$response instanceof Response) {
             throw new \RuntimeException('Authentication Failure Handler did not return a Response.');
         }
+
         return $response;
     }
 
     /**
      * Handle authentication success event
      *
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
+     *
      * @return Response
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
@@ -165,6 +164,7 @@ class RefreshTokenAuthenticator implements
         if (!$response instanceof Response) {
             throw new \RuntimeException('Authentication Success Handler did not return a Response.');
         }
+
         return $response;
     }
 }

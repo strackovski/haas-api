@@ -44,29 +44,40 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * @return array
      */
-    public function aggregateData() {
+    public function aggregateData()
+    {
         return [
 //            "users" => $this->findEntity(User::class),
-            "users" => $this->getUsers(),
-            "cheers"=> $this->getCheers()
+"users" => $this->getUsers(),
+"cheers" => $this->getCheers(),
         ];
     }
 
     /**
      * @return mixed
      */
-    public function getCheers() {
-        return $this->entityManager->getRepository(Cheer::class)->findAll();
+    public function getUsers()
+    {
+        return $this->createQueryBuilder('u')->select('u')->getQuery()->getResult();
+    }
+
+    /**
+     * @param      $alias
+     * @param null $indexBy
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createQueryBuilder($alias, $indexBy = null)
+    {
+        return $this->repository->createQueryBuilder($alias, $indexBy);
     }
 
     /**
      * @return mixed
      */
-    public function getUsers() {
-        return $this->createQueryBuilder('u')
-                    ->select('u')
-                    ->getQuery()
-                    ->getResult();
+    public function getCheers()
+    {
+        return $this->entityManager->getRepository(Cheer::class)->findAll();
     }
 
     /**
@@ -98,6 +109,38 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
+
+    /**
+     * @param array      $criteria
+     * @param array|null $orderBy
+     *
+     * @return null|object
+     */
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        return $this->repository->findOneBy($criteria, $orderBy);
+    }
+
+    /**
+     * @param array      $criteria
+     * @param array|null $orderBy
+     * @param null       $limit
+     * @param null       $offset
+     *
+     * @return array
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
      * Find user helper
      *
      * @param array $criteria
@@ -112,7 +155,8 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * @param EntityInterface $entity
      */
-    public function persist(EntityInterface $entity) {
+    public function persist(EntityInterface $entity)
+    {
         $this->entityManager->persist($entity);
     }
 
@@ -152,8 +196,8 @@ abstract class AbstractRepository implements RepositoryInterface
             }
 
             try {
-                $query = $this->entityManager
-                    ->createQuery("SELECT m FROM $entityClass m WHERE m.$key = '$value'");
+                $query = $this->entityManager->createQuery("SELECT m FROM $entityClass m WHERE m.$key = '$value'");
+
                 return $query->getSingleResult();
             } catch (NonUniqueResultException $e) {
                 continue;
@@ -185,6 +229,7 @@ abstract class AbstractRepository implements RepositoryInterface
         if (!is_null($entity)) {
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
+
             return $entity;
         }
 
@@ -202,38 +247,6 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->repository->findAll();
-    }
-
-    /**
-     * @param array      $criteria
-     * @param array|null $orderBy
-     *
-     * @return null|object
-     */
-    public function findOneBy(array $criteria, array $orderBy = null)
-    {
-        return $this->repository->findOneBy($criteria, $orderBy);
-    }
-
-    /**
-     * @param array      $criteria
-     * @param array|null $orderBy
-     * @param null       $limit
-     * @param null       $offset
-     *
-     * @return array
-     */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
-    {
-        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
-    }
-
-    /**
      * @param      $id
      * @param null $lockMode
      * @param null $lockVersion
@@ -243,16 +256,5 @@ abstract class AbstractRepository implements RepositoryInterface
     public function find($id, $lockMode = null, $lockVersion = null)
     {
         return $this->repository->find($id, $lockMode, $lockVersion);
-    }
-
-    /**
-     * @param      $alias
-     * @param null $indexBy
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function createQueryBuilder($alias, $indexBy = null)
-    {
-        return $this->repository->createQueryBuilder($alias, $indexBy);
     }
 }

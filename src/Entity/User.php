@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -77,12 +75,34 @@ class User extends BaseUser implements EntityInterface
 
     /**
      * User constructor.
-     *
-     * @param $cheers
      */
     public function __construct()
     {
+        parent::__construct();
         $this->cheers = new ArrayCollection();
+    }
+
+    /**
+     * @Groups({"list", "public"})
+     */
+    public function getCheerCount() {
+        return $this->cheers->count();
+    }
+
+    /**
+     * @Groups({"list", "public"})
+     */
+    public function getUpVoteCount() {
+        $x = 0;
+
+        /** @var Cheer $cheer */
+        foreach ($this->cheers as $cheer) {
+            if ($cheer->getParent() instanceof Cheer) {
+                $x++;
+            }
+        }
+
+        return $x;
     }
 
     /**
@@ -114,19 +134,6 @@ class User extends BaseUser implements EntityInterface
     }
 
     /**
-     * @return bool
-     */
-    public function isMLinkValid(): bool
-    {
-        try {
-            return $this->mLinkValidUntil < new \DateTime();
-        } catch (\Exception $e) {
-            return false;
-        }
-
-    }
-
-    /**
      * @param \DateTime $mLinkValidUntil
      *
      * @return User
@@ -136,6 +143,18 @@ class User extends BaseUser implements EntityInterface
         $this->mLinkValidUntil = $mLinkValidUntil;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMLinkValid(): bool
+    {
+        try {
+            return $this->mLinkValidUntil < new \DateTime();
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -172,7 +191,9 @@ class User extends BaseUser implements EntityInterface
      */
     public function getAvatarUrl()
     {
-        return $this->avatarUrl;
+//        return $this->avatarUrl;
+
+        return "https://laurauinteriordesign.com/wp-content/uploads/2018/03/avatar-placeholder.png";
     }
 
     /**
@@ -196,6 +217,8 @@ class User extends BaseUser implements EntityInterface
     }
 
     /**
+     * @param Cheer $cheer
+     *
      * @return mixed
      */
     public function addCheer(Cheer $cheer)

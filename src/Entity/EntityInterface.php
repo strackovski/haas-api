@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
-
 /**
  * Interface EntityInterface
  *

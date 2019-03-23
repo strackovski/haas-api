@@ -5,11 +5,10 @@ namespace App\Security;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Class JWTUserProvider
@@ -37,8 +36,11 @@ class JWTUserProvider implements UserProviderInterface
      * @param EntityManagerInterface $em
      * @param UserRepository         $repository
      */
-    public function __construct(EntityManagerInterface $em, UserRepository $repository, UserPasswordEncoderInterface $encoder)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        UserRepository $repository,
+        UserPasswordEncoderInterface $encoder
+    ) {
         $this->em = $em;
         $this->repository = $repository;
         $this->encoder = $encoder;

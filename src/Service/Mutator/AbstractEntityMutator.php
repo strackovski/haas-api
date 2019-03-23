@@ -53,6 +53,30 @@ abstract class AbstractEntityMutator implements MutatorInterface
     }
 
     /**
+     * Tells the ObjectManager to make an instance managed and persistent.
+     *
+     * The object will be entered into the database as a result of the flush operation.
+     *
+     * @param EntityInterface $entity The instance to make managed and persistent.
+     *
+     * @return void
+     */
+    public function persist(EntityInterface $entity): void
+    {
+        $this->entityManager->persist($entity);
+    }
+
+    /**
+     * Flushes all changes to objects that have been queued up to now to the database.
+     *
+     * @return void
+     */
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+    }
+
+    /**
      * Flush and persist if possible (?)
      *
      * @param EntityInterface|null $entity
@@ -92,27 +116,13 @@ abstract class AbstractEntityMutator implements MutatorInterface
     }
 
     /**
-     * Tells the ObjectManager to make an instance managed and persistent.
+     * Get managed entity class name
      *
-     * The object will be entered into the database as a result of the flush operation.
-     *
-     * @param EntityInterface $entity The instance to make managed and persistent.
-     *
-     * @return void
+     * @return string
      */
-    public function persist(EntityInterface $entity): void
+    public function getEntityClass(): string
     {
-        $this->entityManager->persist($entity);
-    }
-
-    /**
-     * Flushes all changes to objects that have been queued up to now to the database.
-     *
-     * @return void
-     */
-    public function flush(): void
-    {
-        $this->entityManager->flush();
+        return "App\\Entity\\".StringTools::classNameToClassId($this, true);
     }
 
     /**
@@ -148,15 +158,5 @@ abstract class AbstractEntityMutator implements MutatorInterface
     public function createQuery($dql = ''): Query
     {
         return $this->entityManager->createQuery($dql);
-    }
-
-    /**
-     * Get managed entity class name
-     *
-     * @return string
-     */
-    public function getEntityClass() : string
-    {
-        return "App\\Entity\\" . StringTools::classNameToClassId($this, true);
     }
 }

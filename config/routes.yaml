@@ -51,7 +51,18 @@ api.user.cheer:
     path: /users/{userId}/cheer
     methods: POST
 
+api.user.upvote:
+    controller: App\Controller\Api\UserController::upVote
+    path: /cheers/{cheerId}/upvote
+    methods: POST
+
 api.data:
     controller: App\Controller\Api\UserController::getAll
     path: /data/aggregate
     methods: GET
+
+api.calendar.read_all:
+    controller: App\Controller\Api\CalendarController::ReadAll
+    path: /calendar/all
+    methods: GET
+

@@ -12,6 +12,7 @@
     "gbprod/uuid-normalizer": "^1.1",
     "gedmo/doctrine-extensions": "^2.4",
     "gfreeau/get-jwt-bundle": "^2.0",
+    "google/apiclient": "^2.0",
     "guzzlehttp/guzzle": "^6.3",
     "guzzlehttp/psr7": "^1.5",
     "lexik/jwt-authentication-bundle": "^2.6",

@@ -14,9 +14,10 @@ class ArrayTools
     /**
      * Find an array in a multidimensional array by key
      *
-     * @param array $haystack The array to search in
-     * @param string $searchKey The key name to search for
+     * @param array  $haystack    The array to search in
+     * @param string $searchKey   The key name to search for
      * @param string $searchValue The value of the key
+     *
      * @return array
      */
     public static function findArrayByKeyValue(array $haystack, string $searchKey, string $searchValue)
@@ -43,6 +44,7 @@ class ArrayTools
      *
      * @param $haystack
      * @param $term
+     *
      * @return array
      */
     public static function likeSearchInArray($haystack, $term)

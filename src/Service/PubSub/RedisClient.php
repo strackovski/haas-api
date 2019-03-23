@@ -33,11 +33,13 @@ class RedisClient
 //        $redisScheme = self::DEFAULT_SCHEME
     )
     {
-        $this->client = new Client([
-            'scheme' => self::DEFAULT_SCHEME,
-            'host' => self::DEFAULT_ADDRESS,
-            'port' => self::DEFAULT_PORT
-        ]);
+        $this->client = new Client(
+            [
+                'scheme' => self::DEFAULT_SCHEME,
+                'host' => self::DEFAULT_ADDRESS,
+                'port' => self::DEFAULT_PORT,
+            ]
+        );
     }
 
     /**

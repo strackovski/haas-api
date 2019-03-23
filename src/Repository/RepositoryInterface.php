@@ -25,7 +25,7 @@ interface RepositoryInterface
     /**
      * Finds a single entity by its ID.
      *
-     * @param $id Uuid|string The entity ID.
+     * @param       $id Uuid|string The entity ID.
      * @param array $criteria
      * @param array $options
      *
@@ -45,10 +45,10 @@ interface RepositoryInterface
     /**
      * Finds entities by a set of criteria.
      *
-     * @param array $criteria
+     * @param array      $criteria
      * @param array|null $orderBy
-     * @param int|null $limit
-     * @param int|null $offset
+     * @param int|null   $limit
+     * @param int|null   $offset
      *
      * @return array The objects.
      */

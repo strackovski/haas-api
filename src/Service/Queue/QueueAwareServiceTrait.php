@@ -19,10 +19,11 @@ trait QueueAwareServiceTrait
     /**
      * Push task to queue
      *
-     * @param $class
-     * @param array $args
-     * @param bool $retry
+     * @param        $class
+     * @param array  $args
+     * @param bool   $retry
      * @param string $queue
+     *
      * @return string
      */
     public function pushToQueue($class, $args = [], $retry = true, $queue = Client::QUEUE)

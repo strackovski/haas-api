@@ -18,7 +18,7 @@ interface ManagerInterface
      *
      * @return EntityInterface
      */
-    public function create(EntityInterface ...$entities) : EntityInterface;
+    public function create(EntityInterface ...$entities): EntityInterface;
 
     /**
      * @return mixed

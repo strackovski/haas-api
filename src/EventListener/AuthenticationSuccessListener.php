@@ -20,6 +20,7 @@ class AuthenticationSuccessListener
 
     /**
      * @param JWTEncoderInterface $jwt
+     *
      * @internal param UserManager $userManager
      */
     public function __construct(JWTEncoderInterface $jwt)
@@ -50,7 +51,7 @@ class AuthenticationSuccessListener
             'exp' => (new \DateTime())->add(new \DateInterval('P6M'))->getTimestamp(),
             'sub' => $user->getId(),
             'username' => $user->getUsername(),
-            'roles' => $user->getRoles()
+            'roles' => $user->getRoles(),
         ];
 
         $data['refresh_token'] = $this->jwtEncoder->encode($refreshToken);

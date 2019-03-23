@@ -35,9 +35,13 @@ class RepositoryConfigurator
      */
     public function configure(RepositoryInterface $repository)
     {
-        $repositoryClass = ucfirst(StringTools::classNameToClassId(get_class($repository), true));
-        $repository->setRepository(
-            $this->entityManager->getRepository("App\\Entity\\$repositoryClass")
-        );
+        $entityClass = ucfirst(StringTools::classNameToClassId(get_class($repository), true));
+        $repositoryClass = "App\\Entity\\User";
+
+        if (class_exists($repositoryClass)) {
+            $repositoryClass = "App\\Entity\\$entityClass";
+        }
+
+        $repository->setRepository($this->entityManager->getRepository($repositoryClass));
     }
 }

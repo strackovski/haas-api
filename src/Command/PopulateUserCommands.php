@@ -20,15 +20,6 @@ class PopulateUserCommands extends Command
      * @var string
      */
     protected static $defaultName = 'populate:users';
-
-    /**
-     *
-     */
-    protected function configure()
-    {
-        $this->setDescription('Populate database with user accounts...');
-    }
-
     /** @var EntityManagerInterface */
     private $em;
 
@@ -41,6 +32,14 @@ class PopulateUserCommands extends Command
     {
         parent::__construct();
         $this->em = $em;
+    }
+
+    /**
+     *
+     */
+    protected function configure()
+    {
+        $this->setDescription('Populate database with user accounts...');
     }
 
     /**

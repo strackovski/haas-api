@@ -2,8 +2,9 @@
 
 namespace App\Service\Configurator;
 
-use App\Service\Mutator\MutatorInterface;
+use App\Repository\GenericRepository;
 use App\Service\Manager\RepositoryAwareManagerInterface;
+use App\Service\Mutator\MutatorInterface;
 use App\Service\Primitive\StringTools;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -51,8 +52,7 @@ class ManagerConfigurator
         MutatorInterface $mutator,
         RouterInterface $router,
         EventDispatcherInterface $eventDispatcher
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->mutator = $mutator;
         $this->router = $router;
@@ -68,15 +68,23 @@ class ManagerConfigurator
         $managerClass = StringTools::snakeToCamelCase($managerClass);
 
         $repositoryClass = "App\\Repository\\{$managerClass}Repository";
-        $repository = new $repositoryClass($this->entityManager, $this->entityManager->getRepository("App\\Entity\\{$managerClass}"));
+
+        if (class_exists($repositoryClass)) {
+            $repository = new $repositoryClass(
+                $this->entityManager, $this->entityManager->getRepository("App\\Entity\\{$managerClass}")
+            );
+        } else {
+            $repository = new GenericRepository($this->entityManager);
+        }
 //        $repository->setRepository($this->entityManager->getRepository("App\\Entity\\{$managerClass}"));
 
-
-        $manager->setDependencies([
-            'repository' => $repository,
-            'mutator' => $this->mutator,
-            'router' => $this->router,
-            'eventDispatcher' => $this->eventDispatcher
-        ]);
+        $manager->setDependencies(
+            [
+                'repository' => $repository,
+                'mutator' => $this->mutator,
+                'router' => $this->router,
+                'eventDispatcher' => $this->eventDispatcher,
+            ]
+        );
     }
 }

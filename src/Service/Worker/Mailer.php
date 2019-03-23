@@ -2,8 +2,8 @@
 
 namespace App\Service\Worker;
 
+use App\Service\Mailer\Send;
 use Psr\Log\LoggerInterface;
-use \App\Service\Mailer\Send;
 
 class Mailer implements WorkerInterface
 {
@@ -14,7 +14,7 @@ class Mailer implements WorkerInterface
     protected $logger;
 
     /**
-     * @param Send $send
+     * @param Send            $send
      * @param LoggerInterface $logger
      */
     public function __construct(Send $send, LoggerInterface $logger)

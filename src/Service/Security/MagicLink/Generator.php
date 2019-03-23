@@ -32,7 +32,8 @@ class Generator
      *
      * @param UserRepository $repository
      */
-    public function __construct(UserRepository $repository, RouterInterface $router) {
+    public function __construct(UserRepository $repository, RouterInterface $router)
+    {
         $this->repository = $repository;
         $this->router = $router;
     }
@@ -42,7 +43,8 @@ class Generator
      *
      * @return string
      */
-    public function generate(User $user) {
+    public function generate(User $user)
+    {
         return $this->router->generate('api.login_request', ['mLink' => $user->getMLinkHash()]);
     }
 }

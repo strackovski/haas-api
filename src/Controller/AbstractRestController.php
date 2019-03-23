@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\AccountSettings;
 use App\Entity\AddressBook;
 use App\Entity\EntityInterface;
 use App\Entity\NotificationSettings;
 use App\Entity\PrivacySettings;
 use App\Entity\User;
-use App\Entity\AccountSettings;
 use App\Exception\Request\NotFoundButRequiredException;
 use App\Repository\AbstractRepository;
 use App\Service\Dependency\ServiceResolver;
@@ -18,7 +18,6 @@ use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\FOSRestController;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
@@ -69,33 +68,11 @@ abstract class AbstractRestController extends FOSRestController
         $this->formProcessor = $this->get(EntityFormProcessor::class);
         $this->serializer = $this->get('serializer');
 
-
-
         $this->manager = $this->get(ServiceResolver::getServiceClass(get_class($this), 'manager'));
         $this->repository = $this->manager->getRepository();
 
-
         $this->cache = $this->get('cache.app');
         $this->dispatcher = $this->get('event_dispatcher');
-
-    }
-
-    /**
-     * Return JSON response
-     *
-     * @param       $data
-     * @param int   $status
-     * @param array $groups
-     *
-     * @return Response
-     */
-    protected function response($data, int $status = 200, array $groups = []): Response
-    {
-        return new Response(
-            $this->serializer->serialize($data, 'json', ['groups' => $groups]),
-            $status,
-            ['Content-type' => 'application/json']
-        );
     }
 
     /**
@@ -130,32 +107,22 @@ abstract class AbstractRestController extends FOSRestController
         throw $this->createAccessDeniedException();
     }
 
-    private function provisionUserSettings(User $user)
+    /**
+     * Return JSON response
+     *
+     * @param       $data
+     * @param int   $status
+     * @param array $groups
+     *
+     * @return Response
+     */
+    protected function response($data, int $status = 200, array $groups = []): Response
     {
-        if (!$user->getPrivacy() instanceof PrivacySettings) {
-            $s = new PrivacySettings();
-            $user = $user->setPrivacy($s);
-            $this->repository->save($s);
-        }
-
-        if (!$user->getAccount() instanceof AccountSettings) {
-            $s = new AccountSettings();
-            $user = $user->setAccount($s);
-            $this->repository->save($s);
-        }
-
-        if (!$user->getNotificationSettings() instanceof NotificationSettings) {
-            $s = new NotificationSettings();
-            $user = $user->setNotificationSettings($s);
-            $this->repository->save($s);
-        }
-
-        if (!$user->getAddressBook() instanceof AddressBook) {
-            $a = new AddressBook($user);
-            $this->repository->save($a);
-        }
-
-        return $user;
+        return new Response(
+            $this->serializer->serialize($data, 'json', ['groups' => $groups]),
+            $status,
+            ['Content-type' => 'application/json']
+        );
     }
 
     /**
@@ -195,13 +162,18 @@ abstract class AbstractRestController extends FOSRestController
                 continue;
             }
 
-            $queryString = sprintf(/** @lang text */
-                "SELECT m FROM %s m WHERE m.%s = '%s'", $entityClass, $key, $value);
+            $queryString = sprintf(
+            /** @lang text */
+                "SELECT m FROM %s m WHERE m.%s = '%s'",
+                $entityClass,
+                $key,
+                $value
+            );
 
             try {
                 /** @var Query $query */
-                $query = $this->get("doctrine.orm.entity_manager")
-                    ->createQuery($queryString);
+                $query = $this->get("doctrine.orm.entity_manager")->createQuery($queryString);
+
                 return $query->getSingleResult();
             } catch (\Exception $e) {
                 // ...
@@ -241,12 +213,40 @@ abstract class AbstractRestController extends FOSRestController
                 if (!$child->isValid()) {
                     $errors[] = [
                         'name' => $child->getName(),
-                        'messages' => $this->getFormErrors($child)
+                        'messages' => $this->getFormErrors($child),
                     ];
                 }
             }
         }
 
         return $errors;
+    }
+
+    private function provisionUserSettings(User $user)
+    {
+        if (!$user->getPrivacy() instanceof PrivacySettings) {
+            $s = new PrivacySettings();
+            $user = $user->setPrivacy($s);
+            $this->repository->save($s);
+        }
+
+        if (!$user->getAccount() instanceof AccountSettings) {
+            $s = new AccountSettings();
+            $user = $user->setAccount($s);
+            $this->repository->save($s);
+        }
+
+        if (!$user->getNotificationSettings() instanceof NotificationSettings) {
+            $s = new NotificationSettings();
+            $user = $user->setNotificationSettings($s);
+            $this->repository->save($s);
+        }
+
+        if (!$user->getAddressBook() instanceof AddressBook) {
+            $a = new AddressBook($user);
+            $this->repository->save($a);
+        }
+
+        return $user;
     }
 }

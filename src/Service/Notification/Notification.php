@@ -11,9 +11,11 @@ namespace App\Service\Notification;
  */
 class Notification
 {
-    const SUPPORTED_DEVICES = [
-        'IOS', 'ANDROID'
-    ];
+    const SUPPORTED_DEVICES
+        = [
+            'IOS',
+            'ANDROID',
+        ];
 
     /**
      * @var integer
@@ -65,7 +67,7 @@ class Notification
             'badge' => $this->badge,
             'text' => $this->text,
             'deviceToken' => $this->deviceToken,
-            'deviceType' => $this->deviceType
+            'deviceType' => $this->deviceType,
         ];
     }
 }

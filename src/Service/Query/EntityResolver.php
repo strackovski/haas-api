@@ -21,12 +21,13 @@ class EntityResolver
 {
     const ENTITY_NAMESPACE = "App\\Entity\\";
 
-    const ANNOTATIONS = [
-        OneToOne::class,
-        OneToMany::class,
-        ManyToOne::class,
-        ManyToMany::class
-    ];
+    const ANNOTATIONS
+        = [
+            OneToOne::class,
+            OneToMany::class,
+            ManyToOne::class,
+            ManyToMany::class,
+        ];
 
     /**
      * @var Request
@@ -78,7 +79,7 @@ class EntityResolver
         }
 
         if (array_search($candidate, $ex = explode("_", $route))) {
-            if (in_array($candidate . "s", explode("_", $route))) {
+            if (in_array($candidate."s", explode("_", $route))) {
                 return $this->entityExists($candidate);
             }
         }
@@ -94,7 +95,7 @@ class EntityResolver
     protected function entityExists(string $className): ?\ReflectionClass
     {
         try {
-            return new \ReflectionClass(self::ENTITY_NAMESPACE . "$className");
+            return new \ReflectionClass(self::ENTITY_NAMESPACE."$className");
         } catch (\ReflectionException $e) {
             return null;
         }
@@ -120,7 +121,7 @@ class EntityResolver
             $filtered[$property->getName()] = [
                 'entity' => $annotation->targetEntity,
                 'fetch' => $annotation->fetch,
-                'type' => get_class_methods($annotation)
+                'type' => get_class_methods($annotation),
             ];
         }
 

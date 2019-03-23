@@ -2,8 +2,6 @@
 
 namespace App\Exception\Request;
 
-
-
 class MultipleAssociationException extends RequestHandlerException
 {
     public function getFormat(): string

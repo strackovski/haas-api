@@ -4,7 +4,6 @@ namespace App\Event;
 
 use App\Entity\FundRequest;
 use App\Entity\User;
-use Aws\Ses\SesClient;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -31,7 +30,6 @@ class MagicLinkRequestedEvent extends Event
     public function __construct(User $user)
     {
         $this->user = $user;
-
     }
 
     /**

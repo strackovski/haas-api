@@ -28,16 +28,21 @@ class JWTAuthenticatedListener
         $user = $token->getUser();
 
         if (isset($payload['roles']) && is_array($payload['roles'])) {
-            $roles = array_map(function ($roleName) {
-                return new Role($roleName);
-            }, $payload['roles']);
+            $roles = array_map(
+                function ($roleName) {
+                    return new Role($roleName);
+                },
+                $payload['roles']
+            );
 
-            $serialized = serialize([
-                is_object($user) ? clone $user : $user,
-                true,
-                $roles,
-                null,
-            ]);
+            $serialized = serialize(
+                [
+                    is_object($user) ? clone $user : $user,
+                    true,
+                    $roles,
+                    null,
+                ]
+            );
 
             $token->unserialize($serialized);
         }

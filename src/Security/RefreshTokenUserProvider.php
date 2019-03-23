@@ -3,11 +3,11 @@
 namespace App\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use FOS\UserBundle\Model\User;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Class RefreshTokenUserProvider
@@ -33,6 +33,7 @@ class RefreshTokenUserProvider implements UserProviderInterface
      * Load user by their username or email
      *
      * @param string $username The user ID
+     *
      * @return null|object|UserInterface
      */
     public function loadUserByUsername($username)
@@ -54,6 +55,7 @@ class RefreshTokenUserProvider implements UserProviderInterface
      * Refresh user - throws exception as this is stateless authentication
      *
      * @param UserInterface $user
+     *
      * @return UserInterface|void
      */
     public function refreshUser(UserInterface $user)
@@ -65,6 +67,7 @@ class RefreshTokenUserProvider implements UserProviderInterface
      * Return the supported user class
      *
      * @param string $class
+     *
      * @return bool
      */
     public function supportsClass($class)

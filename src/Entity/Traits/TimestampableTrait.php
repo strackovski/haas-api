@@ -5,7 +5,6 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
 
 /**
  * Trait TimestampableTrait
@@ -42,6 +41,7 @@ trait TimestampableTrait
 
     /**
      * @param $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt($createdAt)
@@ -61,6 +61,7 @@ trait TimestampableTrait
 
     /**
      * @param $modifiedAt
+     *
      * @return $this
      */
     public function setModifiedAt($modifiedAt)

@@ -6,12 +6,7 @@ use App\Event\FundsRequestedEvent;
 use App\Event\FundsSubmittedEvent;
 use App\Event\MagicLinkRequestedEvent;
 use App\Event\MagicLinkUsageEvent;
-use App\Repository\UserRepository;
-use App\Service\Mailer\Send;
 use App\Service\Mailer\SimpleEmailService;
-use App\Service\Notification\Notification;
-use App\Service\Notification\PushManager;
-use Aws\Ses\SesClient;
 
 /**
  * Class MagicLinkRequestListener

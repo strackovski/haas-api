@@ -4,13 +4,6 @@ namespace App\Service\Dependency;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Service\Query\EntityResolver;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping\Annotation;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -72,11 +65,13 @@ class UserValueResolver implements ArgumentValueResolverInterface
 
         if ($request->getPathInfo() === "/me/settings") {
             yield $this->repository->findUser($this->security->getUser()->getUsername(), 'own');
+
             return;
         }
 
         if ($request->getPathInfo() === "/transactions") {
             yield $this->repository->findUser($this->security->getUser()->getUsername(), 'transactions');
+
             return;
         }
 

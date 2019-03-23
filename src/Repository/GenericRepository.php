@@ -6,13 +6,13 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class UserRepository
+ * Class GenericRepository
  *
  * @package      App\Repository
  * @author       Vladimir Strackovski <vladimir.strackovski@gmail.com>
  * @copyright    2019 Vladimir Strackovski
  */
-class UserRepository extends AbstractRepository
+class GenericRepository extends AbstractRepository
 {
     /**
      * SubscriptionRepository constructor.

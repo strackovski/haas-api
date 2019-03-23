@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service\Query;
+
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Annotation;

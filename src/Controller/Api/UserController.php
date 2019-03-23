@@ -15,7 +15,6 @@ use FOS\UserBundle\Event\GetResponseNullableUserEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Mailer\Mailer;
-use \Symfony\Component\Security\Core\User\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
@@ -25,6 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class UserController
@@ -35,37 +35,31 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractRestController
 {
+    const MLINK_NO_USER_PWD = true;
     /**
      * @var UserRepository
      */
     protected $repository;
-
     /**
      * @var UserManagerInterface
      */
     protected $userManager;
-
-    /**
-     * @var FormFactory
-     */
-    private $formFactory;
-
     /**
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
-
+    /**
+     * @var FormFactory
+     */
+    private $formFactory;
     /**
      * @var TokenGeneratorInterface
      */
     private $tokenGenerator;
-
     /**
      * @var Mailer
      */
     private $mailer;
-
-    const MLINK_NO_USER_PWD = true;
 
     /**
      * @param ContainerInterface|null $container
@@ -100,17 +94,44 @@ class UserController extends AbstractRestController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    public function upVote($cheerId, UserInterface $user, Request $request)
+    {
+        $cheer = $this->repository->findEntityBy(Cheer::class, ['id' => $cheerId]);
+
+        if (is_null($cheer) || !($cheer instanceof Cheer)) {
+            throw $this->createNotFoundException();
+        }
+
+        $c = new Cheer($cheer->getForUser(), $user);
+        $c->setParent($cheer);
+        $this->repository->save($c);
+//        $this->repository->save($user);
+
+
+        return $this->response($c, 200, ['public']);
+    }
+
+    /**
+     * @param               $userId
+     * @param UserInterface $user
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function addCheer($userId, UserInterface $user, Request $request)
     {
+        $body = json_decode($request->getContent(), 1);
+        $text = $body['text'];
+
         $forUser = $this->repository->findOneBy(['id' => $userId]);
 
         if (is_null($forUser)) {
             throw $this->createNotFoundException();
         }
 
-        $c = new Cheer($forUser);
+        $c = new Cheer($forUser, $user);
+        $c->setText($text);
         $this->repository->save($c);
-
 
         return $this->response($c, 200, ['public']);
     }
@@ -121,7 +142,8 @@ class UserController extends AbstractRestController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function magicLinkRedirect($mlinkHash, Request $request) {
+    public function magicLinkRedirect($mlinkHash, Request $request)
+    {
         return $this->redirect(sprintf("haas://magic-link/%s", $mlinkHash));
     }
 
@@ -160,8 +182,11 @@ class UserController extends AbstractRestController
      * @Rest\View()
      * @Rest\Post("/auth/login")
      */
-    public function magicLinkLoginAction(Request $request, JWTTokenManagerInterface $JWTmanager, JWTEncoderInterface $JWTEncoder)
-    {
+    public function magicLinkLoginAction(
+        Request $request,
+        JWTTokenManagerInterface $JWTmanager,
+        JWTEncoderInterface $JWTEncoder
+    ) {
         $data = json_decode($request->getContent(), true);
 
         if (!array_key_exists('mlink', $data)) {
@@ -172,13 +197,12 @@ class UserController extends AbstractRestController
             return $this->response('Error', 401);
         }
 
-
         $refreshToken = [
             'iat' => (new \DateTime())->getTimestamp(),
             'exp' => (new \DateTime())->add(new \DateInterval('P6M'))->getTimestamp(),
             'sub' => $user->getId(),
             'username' => $user->getUsername(),
-            'roles' => $user->getRoles()
+            'roles' => $user->getRoles(),
         ];
 
         try {

@@ -48,5 +48,5 @@ interface MutatorInterface
      *
      * @return string
      */
-    public function getEntityClass() : string;
+    public function getEntityClass(): string;
 }

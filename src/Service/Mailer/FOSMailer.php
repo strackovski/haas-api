@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Service\Mailer;
 
-use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Mailer\MailerInterface;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Routing\RouterInterface;
-use App\Service\Mailer\Send;
 
 class FOSMailer implements MailerInterface
 {
@@ -44,6 +44,34 @@ class FOSMailer implements MailerInterface
     }
 
     /**
+     * Send email message to the message queue
+     *
+     * @param UserInterface $user
+     * @param string        $subject
+     * @param string        $template
+     * @param array         $templateArgs
+     *
+     * @return string
+     */
+    private function sendToQueue(UserInterface $user, string $subject, string $template, array $templateArgs = [])
+    {
+        $templateArgs = array_merge(
+            [
+                'username' => $user->getUsername(),
+            ],
+            $templateArgs
+        );
+
+        return $this->send->toQueue(
+            $this->send->getFromAddress(),
+            [$user->getEmail()],
+            $subject,
+            $template,
+            $templateArgs
+        );
+    }
+
+    /**
      * Send an email to a user to confirm the password reset
      *
      * @param UserInterface $user
@@ -63,32 +91,6 @@ class FOSMailer implements MailerInterface
                     RouterInterface::ABSOLUTE_URL
                 ),
             ]
-        );
-    }
-
-    /**
-     * Send email message to the message queue
-     *
-     * @param UserInterface $user
-     * @param string $subject
-     * @param string $template
-     * @param array $templateArgs
-     * @return string
-     */
-    private function sendToQueue(UserInterface $user, string $subject, string $template, array $templateArgs = [])
-    {
-        $templateArgs = array_merge(
-            [
-                'username' => $user->getUsername(),
-            ],
-            $templateArgs
-        );
-        return $this->send->toQueue(
-            $this->send->getFromAddress(),
-            [$user->getEmail()],
-            $subject,
-            $template,
-            $templateArgs
         );
     }
 }

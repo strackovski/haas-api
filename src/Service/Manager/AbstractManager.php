@@ -2,17 +2,17 @@
 
 namespace App\Service\Manager;
 
+use App\Entity\AccountSettings;
+use App\Entity\AddressBook;
 use App\Entity\EntityInterface;
+use App\Entity\NotificationSettings;
 use App\Entity\PrivacySettings;
 use App\Entity\User;
-use App\Service\Mutator\MutatorInterface;
 use App\Repository\RepositoryInterface;
+use App\Service\Mutator\MutatorInterface;
 use App\Service\Primitive\StringTools;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
-use App\Entity\AccountSettings;
-use App\Entity\AddressBook;
-use App\Entity\NotificationSettings;
 
 /**
  * Class AbstractManager
@@ -45,20 +45,19 @@ abstract class AbstractManager implements RepositoryAwareManagerInterface
 
     abstract public function create(EntityInterface ...$entities): EntityInterface;
 
+    /**
+     * Returns the class name of the object managed by the manager.
+     *
+     * @return string
+     */
+    public function getEntityClass(): string
+    {
+        return "App\\Entity\\".StringTools::classNameToClassId($this, true);
+    }
+
     public function updateStatus(EntityInterface $entity, User $user = null, $status = 'seen')
     {
         return null;
-    }
-
-    public function save(EntityInterface $entity)
-    {
-        try {
-            return $this->mutator->save($entity);
-        } catch (\Exception $e) {
-            // $this->logger->
-            // exception message builder
-            throw $e;
-        }
     }
 
     public function update(EntityInterface $entity = null)
@@ -89,7 +88,7 @@ abstract class AbstractManager implements RepositoryAwareManagerInterface
      */
     public function provisionUserDefaults(User $user)
     {
-        if (!$user->getPrivacy() instanceof PrivacySettings ) {
+        if (!$user->getPrivacy() instanceof PrivacySettings) {
             $s = new PrivacySettings();
             $user = $user->setPrivacy($s);
             $this->save($s);
@@ -115,14 +114,23 @@ abstract class AbstractManager implements RepositoryAwareManagerInterface
         return $user;
     }
 
-    /**
-     * Returns the class name of the object managed by the manager.
-     *
-     * @return string
-     */
-    public function getEntityClass(): string
+    public function save(EntityInterface $entity)
     {
-        return "App\\Entity\\" . StringTools::classNameToClassId($this, true);
+        try {
+            return $this->mutator->save($entity);
+        } catch (\Exception $e) {
+            // $this->logger->
+            // exception message builder
+            throw $e;
+        }
+    }
+
+    /**
+     * @return MutatorInterface
+     */
+    public function getMutator(): MutatorInterface
+    {
+        return $this->mutator;
     }
 
     /**
@@ -131,6 +139,14 @@ abstract class AbstractManager implements RepositoryAwareManagerInterface
     public function setMutator(MutatorInterface $mutator): void
     {
         $this->mutator = $mutator;
+    }
+
+    /**
+     * @return RepositoryInterface
+     */
+    public function getRepository(): RepositoryInterface
+    {
+        return $this->repository;
     }
 
     /**
@@ -150,35 +166,19 @@ abstract class AbstractManager implements RepositoryAwareManagerInterface
     }
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @return MutatorInterface
-     */
-    public function getMutator(): MutatorInterface
-    {
-        return $this->mutator;
-    }
-
-    /**
-     * @return RepositoryInterface
-     */
-    public function getRepository(): RepositoryInterface
-    {
-        return $this->repository;
-    }
-
-    /**
      * @return EventDispatcherInterface
      */
     public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->eventDispatcher;
+    }
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

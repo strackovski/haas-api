@@ -32,7 +32,8 @@ class S3
      * @param string $b
      * @param string $r
      */
-    public function __construct(string $k, string $s, string $b, string $r) {
+    public function __construct(string $k, string $s, string $b, string $r)
+    {
         $this->bucket = $b;
         $this->client = new S3Client(
             [
@@ -57,7 +58,8 @@ class S3
      * @return \Aws\Result
      * @throws \Exception
      */
-    public function uploadFileToS3(UploadedFile $f, string $n, string $k) {
+    public function uploadFileToS3(UploadedFile $f, string $n, string $k)
+    {
         try {
             return $this->client->putObject(
                 [
@@ -65,7 +67,7 @@ class S3
                     'Key' => sprintf("%s/%s", $k, $n),
                     'SourceFile' => $f->getPath().'/'.$f->getFilename(),
                     'ContentType' => $f->getClientMimeType(),
-                    'ACL' => 'public-read'
+                    'ACL' => 'public-read',
                 ]
             );
         } catch (\Exception $e) {

@@ -3,10 +3,6 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Trait EntityTrait
@@ -41,6 +37,7 @@ trait EntityTrait
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
